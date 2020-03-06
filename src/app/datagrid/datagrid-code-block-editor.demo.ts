@@ -27,11 +27,13 @@ export const CodeBlockFormatter = (row, cell, value, col, rowData, api): string 
         <label for="accounting-unit" soho-label="" class="label">Accounting Unit</label>
         <span class="data">99 CORP</span>
 
+        <!--
         <label for="cost-center" soho-label="" class="label">Cost Center</label>
         <span class="data">102</span>
 
         <label for="department" soho-label="" class="label">Department</label>
         <span class="data">102</span>
+        -->
 
   </span>`;
   /* tslint:enable */
@@ -52,6 +54,7 @@ export const CodeBlockFormatter = (row, cell, value, col, rowData, api): string 
               [dataset]="ledgerData"
               field="column1">
 
+            <!--
             <button soho-button="icon" icon="more" class="btn-actions btn-menu" soho-context-menu trigger="click"></button>
             <ul soho-popupmenu>
               <li soho-popupmenu-item><a soho-popupmenu-label>Show Field History</a></li>
@@ -64,6 +67,7 @@ export const CodeBlockFormatter = (row, cell, value, col, rowData, api): string 
                 </ul>
               </li>
             </ul>
+            -->
           </div>
 
           <div class="field">
@@ -75,6 +79,7 @@ export const CodeBlockFormatter = (row, cell, value, col, rowData, api): string 
               [dataset]="accountingData"
               field="column1">
 
+            <!--
             <button soho-button="icon" icon="more" class="btn-actions btn-menu" soho-context-menu trigger="click"></button>
             <ul soho-popupmenu>
               <li soho-popupmenu-item><a soho-popupmenu-label>Show Field History</a></li>
@@ -87,6 +92,7 @@ export const CodeBlockFormatter = (row, cell, value, col, rowData, api): string 
                 </ul>
               </li>
               </ul>
+              -->
           </div>
 
           <div class="field">
@@ -98,6 +104,7 @@ export const CodeBlockFormatter = (row, cell, value, col, rowData, api): string 
               [dataset]="accountingData"
               field="column1">
 
+            <!--
             <button soho-button="icon" icon="more" class="btn-actions btn-menu" soho-context-menu trigger="click"></button>
             <ul soho-popupmenu>
               <li soho-popupmenu-item><a soho-popupmenu-label>Show Field History</a></li>
@@ -110,8 +117,10 @@ export const CodeBlockFormatter = (row, cell, value, col, rowData, api): string 
                 </ul>
               </li>
             </ul>
+            -->
           </div>
 
+          <!--
           <div class="field">
             <label soho-label for="cost-center">Cost Center</label>
             <input soho-lookup soho-field-options name="cost-center" id="cost-center" type="text" value="102" size="3"
@@ -157,12 +166,13 @@ export const CodeBlockFormatter = (row, cell, value, col, rowData, api): string 
               </li>
             </ul>
           </div>
+          -->
 
       </div>
   `
 })
 export class CodeBlockEditorComponent  implements SohoDataGridCellEditor {
-  @ViewChild(CodeBlockComponent) codeblock: CodeBlockComponent;
+  @ViewChild(CodeBlockComponent, { static: true }) codeblock: CodeBlockComponent;
 
   value: string;
   public className = '.code-block';
@@ -212,34 +222,36 @@ export class CodeBlockEditorComponent  implements SohoDataGridCellEditor {
   }
 }
 
-@Component({
-  selector: 'app-datagrid-code-block-editor',
-  templateUrl: './datagrid-code-block-editor.demo.html',
-  styleUrls: ['../code-block/code-block.formatter.css']
-})
-export class DataGridCodeBlockEditorDemoComponent implements OnInit {
-  gridOptions = null;
-
-  ngOnInit(): void {
-    this.gridOptions = {
-      columns: COLUMNS, // tslint:disable-line
-      dataset: CODE_BLOCK_DATA,
-      selectable: 'single',
-      idProperty: 'productId',
-      editable: true,
-      filterable: true
-    };
-  }
-}
-
 export const COLUMNS: SohoDataGridColumn[] = [
+  {
+    id: 'selectionCheckbox',
+    sortable: false,
+    resizable: false,
+    width: 50,
+    formatter: Soho.Formatters.SelectionCheckbox,
+    align: 'center'
+  },
+
   {
     id: 'companyId',
     name: 'Company',
     field: 'companyId',
     filterType: 'text',
-    width: 200,
+    // width: 200,
     editor: Soho.Editors.Input
+  },
+
+  { id: 'codeBlock',
+    name: 'Code Block',
+    field: 'codeBlock',
+    sortable: false,
+    formatter: CodeBlockFormatter,
+    filterType: 'text',
+    // expandOnActivate: true,
+    textOverflow: 'ellipsis',
+    editorComponent: CodeBlockEditorComponent,
+    editorComponentInputs: {},
+    width: 570
   },
 
   {
@@ -247,11 +259,14 @@ export const COLUMNS: SohoDataGridColumn[] = [
     name: 'Name',
     field: 'companyName',
     filterType: 'text',
-    width: 200,
+    // width: 200,
     editor: Soho.Editors.Input
   },
 
-  { id: 'codeBlock', name: 'Code Block',
+  /*
+  { id: 'codeBlock',
+    name: 'Code Block',
+    field: 'codeBlock',
     sortable: false,
     formatter: CodeBlockFormatter,
     filterType: 'text',
@@ -260,4 +275,37 @@ export const COLUMNS: SohoDataGridColumn[] = [
     editorComponent: CodeBlockEditorComponent,
     editorComponentInputs: {}
   }
+  */
 ];
+
+@Component({
+  selector: 'app-datagrid-code-block-editor',
+  templateUrl: 'datagrid-code-block-editor.demo.html',
+  styleUrls: ['../code-block/code-block.formatter.css']
+})
+export class DataGridCodeBlockEditorDemoComponent implements OnInit {
+  gridOptions: SohoDataGridOptions = null;
+
+  ngOnInit(): void {
+    const tooltipCallback = (cell: number, value: any): string => {
+      return 'Test: ' + value;
+    };
+
+    COLUMNS[1].tooltip = tooltipCallback;
+    COLUMNS[2].tooltip = tooltipCallback;
+
+    this.gridOptions = {
+      columns: COLUMNS, // tslint:disable-line
+      dataset: CODE_BLOCK_DATA,
+      editable: true,
+      filterable: false,
+      enableTooltips: true,
+      redrawOnResize: false,
+      rowHeight: 'short',
+      selectable: 'mixed',
+      showDirty: true,
+      cellNavigation: true,
+      actionableMode: true,
+    };
+  }
+}

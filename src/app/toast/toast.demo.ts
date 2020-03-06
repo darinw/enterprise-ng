@@ -7,7 +7,7 @@ import { SohoToastService } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-toast-demo',
-  templateUrl: './toast.demo.html'
+  templateUrl: 'toast.demo.html'
 })
 export class ToastDemoComponent implements OnInit {
   // Inject Toast Servivce as a dependency and get an instance variable
@@ -15,6 +15,6 @@ export class ToastDemoComponent implements OnInit {
   ngOnInit() { }
 
   showToast(position: SohoToastPosition = SohoToastService.TOP_RIGHT) {
-    this.toastService.show({title: 'Sample Message', message: 'This is a Toast message', position: position});
+    this.toastService.show({draggable: true, title: 'Sample Message', message: 'This is a Toast message', position: position});
   }
 }

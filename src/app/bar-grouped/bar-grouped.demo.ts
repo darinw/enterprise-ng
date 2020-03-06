@@ -8,11 +8,11 @@ import { SohoBarComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-bar-demo',
-  templateUrl: './bar-grouped.demo.html',
+  templateUrl: 'bar-grouped.demo.html',
 })
 export class BarGroupedDemoComponent implements OnInit {
 
-  @ViewChild(SohoBarComponent) sohoBarComponent: SohoBarComponent;
+  @ViewChild(SohoBarComponent, { static: true }) sohoBarComponent: SohoBarComponent;
 
   // The following multiple "private selection" definitions are all examples of ways to set the selection on the chart
   // private selection: SohoBarSelected  = {groupName: 'name', groupValue: 'Component B'};

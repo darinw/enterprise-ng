@@ -5,11 +5,13 @@
  * interface of the Soho dropdown control.
  */
 
- type SohoDropDownMoveSelectedOptions = 'group' | 'all' | 'none';
+type SohoDropDownMoveSelectedOptions = 'group' | 'all' | 'none';
 
- type SohoDropDownFilterModeOptions = false | 'startsWith' | 'contains';
+type SohoDropDownFilterModeOptions = false | 'contains' | 'keyword' | 'wordStartsWith' | 'phraseStartsWith';
 
- type SohoDropDownReloadStyles = 'none' | 'open' | 'typeahead';
+type SohoDropDownReloadStyles = 'none' | 'open' | 'typeahead';
+
+type SohoDropDownEventActions = 'closed' | 'tab' | 'select';
 
 /**
  * Drop Down Options
@@ -26,7 +28,7 @@ interface SohoDropDownOptions {
   cssClass?: string;
 
   /**
-   * Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
+   * Search mode to use between 'contains',  'keyword',  'wordStartsWith', 'phraseStartsWith false will not allow client side filter
    */
   filterMode?: SohoDropDownFilterModeOptions;
 
@@ -148,6 +150,9 @@ type SohoDropDownResponseFunction = (
  * Type safe dropdown event object.
  */
 interface SohoDropDownEvent extends JQuery.TriggeredEvent {
+
+  /** Optional action used when the list is closed. */
+  action?: SohoDropDownEventActions;
 }
 
 /**

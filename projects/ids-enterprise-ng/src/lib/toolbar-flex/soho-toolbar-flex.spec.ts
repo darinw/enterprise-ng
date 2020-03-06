@@ -2,12 +2,12 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {Component, DebugElement, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import { Component, DebugElement, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {SohoToolbarFlexComponent, SohoToolbarFlexSearchFieldComponent} from './soho-toolbar-flex.component';
-import {SohoToolbarFlexModule} from './soho-toolbar-flex.module';
-import {SohoMenuButtonModule} from '../menu-button';
-import {TestHelper} from '../utils';
+import { SohoToolbarFlexComponent, SohoToolbarFlexSearchFieldComponent } from './soho-toolbar-flex.component';
+import { SohoToolbarFlexModule } from './soho-toolbar-flex.module';
+import { SohoMenuButtonModule } from '../menu-button';
+import { TestHelper } from '../utils';
 
 @Component({
   template: `<soho-toolbar-flex
@@ -52,7 +52,7 @@ import {TestHelper} from '../utils';
              placeholder="Search..."
              [clearable]="true"
              [collapsible]="false"
-             [options]="searchfieldOptions"
+             filterMode="contains"
              [(ngModel)]="model.searchValue"
              (change)="onChange($event)"/>
     </soho-toolbar-flex-section>
@@ -96,10 +96,6 @@ class SohoToolbarFlexTestComponent {
     searchValue: ''
   };
 
-  searchfieldOptions = {
-    filterMode: 'contains',
-  };
-
   onBeforeMoreMenuOpen = (response: AjaxBeforeOpenResponseFunction, options: any) => {
     if (options.hasOwnProperty('contextElement')) {
       if (options.contextElement[0].parentElement.parentElement.id === 'menu-button') {
@@ -129,7 +125,7 @@ class SohoToolbarFlexTestComponent {
 }
 
 describe('Soho Toolbar Flex Tests', () => {
-  let toolbarflex: SohoToolbarFlexComponent;
+  // let toolbarflex: SohoToolbarFlexComponent;
   let component: SohoToolbarFlexTestComponent;
   let fixture: ComponentFixture<SohoToolbarFlexTestComponent>;
   let de: DebugElement;
@@ -144,10 +140,11 @@ describe('Soho Toolbar Flex Tests', () => {
     fixture = TestBed.createComponent(SohoToolbarFlexTestComponent);
     component = fixture.componentInstance;
 
-    toolbarflex = component.toolbarFlex;
-
     de = fixture.debugElement;
     el = de.query(By.css('soho-toolbar-flex')).nativeElement;
+
+    fixture.detectChanges();
+    // toolbarflex = component.toolbarFlex;
   });
 
   it('Check HTML content', () => {
@@ -253,7 +250,7 @@ describe('Soho Toolbar Flex Tests', () => {
 
       const spy = spyOn<any>(component.searchField.searchField, 'updated').and.callThrough();
 
-      component.searchField.options.filterMode = 'startsWith';
+      component.searchField.options.filterMode = 'wordStartsWith';
       component.searchField.source = (query, done) => {
         this.objectBasedData().subscribe((items) => {
           done(query, items);
@@ -268,7 +265,7 @@ describe('Soho Toolbar Flex Tests', () => {
       expect(component.searchField.options.clearable).toBeFalsy('search field clearable');
       expect(component.searchField.options.collapsible).toBeTruthy('search field not collapsible');
       expect(component.searchField.options.collapsibleOnMobile).toBeTruthy('search field not collapsible on mobile');
-      expect(component.searchField.options.filterMode).toBe('startsWith');
+      expect(component.searchField.options.filterMode).toBe('wordStartsWith');
       expect(component.searchField.options.source).toBeDefined();
 
     });

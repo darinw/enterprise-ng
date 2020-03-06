@@ -9,6 +9,7 @@ import { SohoBulletModule } from './bullet/soho-bullet.module';
 import { SohoBlockGridModule } from './blockgrid/soho-blockgrid.module';
 import { SohoBusyIndicatorModule } from './busyindicator/soho-busyindicator.module';
 import { SohoButtonModule } from './button/soho-button.module';
+import { SohoCalendarModule } from './calendar/soho-calendar.module';
 import { SohoChartModule } from './chart/soho-chart.module';
 import { SohoCheckBoxModule } from './checkbox/soho-checkbox.module';
 import { SohoCirclepagerModule } from './circlepager/soho-circlepager.module';
@@ -44,8 +45,9 @@ import { SohoMaskModule } from './mask/soho-mask.module';
 import { SohoMastheadModule } from './masthead/soho-masthead.module';
 import { SohoMenuButtonModule } from './menu-button/soho-menu-button.module';
 import { SohoMessageModule } from './message/soho-message.module';
+import { SohoModalModule } from './modal/soho-modal.module';
 import { SohoModalDialogModule } from './modal-dialog/soho-modal-dialog.module';
-import { SohoMonthViewModule } from './monthview/soho-monthview.module';
+import { SohoNotificationModule } from './notification/soho-notification.module';
 import { SohoPagerModule } from './pager/soho-pager.module';
 import { SohoPersonalizeModule } from './personalize/soho-personalize.module';
 import { SohoPieModule } from './pie/soho-pie.module';
@@ -75,6 +77,7 @@ import { SohoTrackDirtyModule } from './trackdirty/soho-trackdirty.module';
 import { SohoTreeModule } from './tree/soho-tree.module';
 import { SohoTreemapModule } from './treemap/soho-treemap.module';
 import { SohoVersionInitializerModule } from './version/version-initializer.module';
+import { SohoWeekViewModule } from './week-view/soho-week-view.module';
 import { SohoWizardModule } from './wizard/soho-wizard.module';
 
 @NgModule({
@@ -89,6 +92,7 @@ import { SohoWizardModule } from './wizard/soho-wizard.module';
     SohoBulletModule,
     SohoBusyIndicatorModule,
     SohoButtonModule,
+    SohoCalendarModule,
     SohoChartModule,
     SohoCheckBoxModule,
     SohoCirclepagerModule,
@@ -124,8 +128,9 @@ import { SohoWizardModule } from './wizard/soho-wizard.module';
     SohoMastheadModule,
     SohoMenuButtonModule,
     SohoMessageModule,
+    SohoModalModule,
     SohoModalDialogModule,
-    SohoMonthViewModule,
+    SohoNotificationModule,
     SohoPagerModule,
     SohoPersonalizeModule,
     SohoPieModule,
@@ -154,6 +159,7 @@ import { SohoWizardModule } from './wizard/soho-wizard.module';
     SohoTrackDirtyModule,
     SohoTreeModule,
     SohoTreemapModule,
+    SohoWeekViewModule,
     SohoWizardModule
   ],
   declarations: [],
@@ -168,6 +174,7 @@ import { SohoWizardModule } from './wizard/soho-wizard.module';
     SohoBulletModule,
     SohoBusyIndicatorModule,
     SohoButtonModule,
+    SohoCalendarModule,
     SohoChartModule,
     SohoCheckBoxModule,
     SohoCirclepagerModule,
@@ -202,8 +209,9 @@ import { SohoWizardModule } from './wizard/soho-wizard.module';
     SohoMaskModule,
     SohoMastheadModule,
     SohoMenuButtonModule,
+    SohoModalModule,
     SohoModalDialogModule,
-    SohoMonthViewModule,
+    SohoNotificationModule,
     SohoPagerModule,
     SohoPersonalizeModule,
     SohoPieModule,
@@ -233,6 +241,7 @@ import { SohoWizardModule } from './wizard/soho-wizard.module';
     SohoTreeModule,
     SohoTreemapModule,
     SohoVersionInitializerModule,
+    SohoWeekViewModule,
     SohoWizardModule
   ]
 })

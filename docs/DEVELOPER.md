@@ -249,7 +249,7 @@ If you need to debug unit tests.
 
 - Put a `fit(` on the test to focus the test.
 - Place a `debugger` statement in the code where you want to debug.
-- Run the tests with the command `ng test ids-enterprise-ng --browsers=Chrome`
+- Run the tests with the command `npm run testdebug`
 - press the debugger button in the browser
 - open dev tools and refresh the page
 
@@ -310,7 +310,7 @@ Run the application (in the test server) using `ng s`.
 
 To integrate this into your application simply include the **ids-enterprise-ng** package into your application, and include the **SohoComponentsModule** into your application module definition.  For further details, see the QuickStart guide.
 
-## Using mpn link
+## Using npm link
 
 Using npm link allows you to test the changes you have made in a real project.
 

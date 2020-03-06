@@ -13,7 +13,7 @@ import { DataGridPagingIndeterminateDemoService } from './datagrid-paging-indete
 
 @Component({
   selector: 'app-datagrid-grouped-header-demo',
-  templateUrl: './datagrid-grouped-header.demo.html',
+  templateUrl: 'datagrid-grouped-header.demo.html',
   providers: [ DataGridPagingIndeterminateDemoService ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

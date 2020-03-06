@@ -22,7 +22,7 @@ export type SohoButtonType = 'btn' | 'primary' | 'secondary' | 'tertiary' | 'ico
 
 @Component({
   selector: 'button[soho-button]', // tslint:disable-line
-  templateUrl: './soho-button.component.html',
+  templateUrl: 'soho-button.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SohoButtonComponent implements AfterViewInit, OnDestroy, OnInit {
@@ -107,6 +107,12 @@ export class SohoButtonComponent implements AfterViewInit, OnDestroy, OnInit {
       // todo: how to update the button when hideMenuArrow changes?
     }
   }
+
+  /**
+   * Used to set an extra class on the soho-icon being used by soho-button.
+   * Useful to set emerald06-color azure10-color to change the icon color.
+   */
+  @Input() extraIconClass: string;
 
   get hideMenuArrow() {
     return this._buttonOptions.hideMenuArrow;

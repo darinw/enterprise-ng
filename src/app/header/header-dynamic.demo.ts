@@ -14,7 +14,7 @@ import { SohoTabsComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-header-dynamic-demo',
-  templateUrl: './header-dynamic.demo.html'
+  templateUrl: 'header-dynamic.demo.html'
 })
 export class SohoHeaderDynamicDemoComponent {
   @HostBinding('class.header') get isHeader() { return true; }
@@ -22,7 +22,7 @@ export class SohoHeaderDynamicDemoComponent {
   @HostBinding('class.has-toolbar') get hasHeaderToolbar() { return !!this.toolbarOptions; }
   @HostBinding('class.has-tabs') get hasHeaderTabs() { return !!this.tabOptions; }
 
-  @ViewChild(SohoToolbarComponent) sohoToolbarComponent: SohoToolbarComponent;
+  @ViewChild(SohoToolbarComponent, { static: true }) sohoToolbarComponent: SohoToolbarComponent;
   @ViewChild(SohoTabsComponent) sohoTabsComponent: SohoTabsComponent;
 
   /**

@@ -15,7 +15,7 @@ import { PAGING_COLUMNS, PAGING_DATA } from './datagrid-paging-data';
 
 @Component({
   selector: 'app-datagrid-mixed-selection-demo',
-  templateUrl: './datagrid-mixed-selection.demo.html',
+  templateUrl: 'datagrid-mixed-selection.demo.html',
   providers: [{ provide: SohoDataGridService, useClass: DataGridDemoService }],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

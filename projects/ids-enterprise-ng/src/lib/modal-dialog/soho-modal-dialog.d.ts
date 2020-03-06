@@ -66,9 +66,22 @@ interface SohoModalOptions {
   // The maximum width to show for the modal, regardless of content.
   maxWidth?: number;
 
+  // Force the modal to go full size.
+  fullsize?: SohoModalFullSize;
+
+  // The breakpoint when to go fullsize.
+  breakpoint?: SohoModalBreakPoint;
+
   // A call back function for showing the modal
   beforeShow?: any;
+
+  /** Center the title of the dialog. */
+  centerTitle?: boolean
 }
+
+type SohoModalFullSize = false | 'responsive' | 'always';
+type SohoModalBreakPoint = 'phone' | 'slim' | 'phablet' |
+  'phone-to-tablet' | 'wide-tablet' | 'tablet-to-desktop' | 'desktop' | 'desktop-to-extralarge';
 
 interface SohoModalButton {
   /** An optional identifier for the button. */
@@ -82,7 +95,7 @@ interface SohoModalButton {
   type?: 'input' | 'button';
 
   /** Text for the button. */
-  text: string;
+  text?: string;
 
   /** Validate */
   validate?: boolean;
@@ -95,6 +108,9 @@ interface SohoModalButton {
 
   /** Click handler. */
   click?: SohoModalButtonClickFunction;
+
+  /** class for the button. */
+  cssClass?: string;
 
   /** Align the button (CAP Centered Tooltip) **/
   align?: 'left' | 'center' | 'right';
@@ -135,6 +151,11 @@ interface SohoModalStatic {
    * Forces a resize of the dialog.
    */
   resize();
+
+  /**
+   * Open the modal dialog.
+   */
+  open(): void;
 
   /**
    * Close the modal dialog.

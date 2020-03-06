@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 
 import { SohoWizardModule } from './soho-wizard.module';
 import { SohoWizardComponent } from './soho-wizard.component';
-import { SohoWizardTickComponent } from './soho-wizard-tick.component';
 
 describe('Soho Wizard Unit Tests', () => {
   let comp: SohoWizardComponent;
@@ -16,33 +15,39 @@ describe('Soho Wizard Unit Tests', () => {
   let de: DebugElement;
   let el: HTMLElement;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [SohoWizardComponent]
-    });
+    }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(SohoWizardComponent);
     comp = fixture.componentInstance;
-    fixture.detectChanges();
-
     de = fixture.debugElement;
     el = de.nativeElement;
 
     comp.ticks = [
-      { label: 'One', href: 'one', state: 'current'},
-      { label: 'Two', href: 'two'},
-      { label: 'Three', href: 'three'},
-      { label: 'Four', href: 'four'},
-      { label: 'Five', href: 'five'},
-      { label: 'Six', href: 'six'}
+      { label: 'One', href: 'one', state: 'current' },
+      { label: 'Two', href: 'two' },
+      { label: 'Three', href: 'three' },
+      { label: 'Four', href: 'four' },
+      { label: 'Five', href: 'five' },
+      { label: 'Six', href: 'six' }
     ];
+
+    fixture.detectChanges();
   });
 
-  it('Check Empty Content', () => {
+  it('should create', () => {
+    expect(comp).toBeDefined();
+  });
+
+  it('Check Empty Content', async (done) => {
+    fixture.detectChanges();
     expect(el.nodeName).toEqual('DIV');
-    // expect(el.id).toEqual('root1');
-    expect(el.hasAttribute('soho-wizard')).toBeTruthy();
     expect(el.classList).toContain('wizard');
+    done();
   });
 });
 
@@ -66,12 +71,12 @@ class SohoWizardTestComponent {
   @ViewChild(SohoWizardComponent) wizard: SohoWizardComponent;
 
   public ticks: SohoWizardTick[] = [
-    { label: 'One', href: 'one', state: 'current'},
-    { label: 'Two', href: 'two'},
-    { label: 'Three', href: 'three'},
-    { label: 'Four', href: 'four'},
-    { label: 'Five', href: 'five'},
-    { label: 'Six', href: 'six'}
+    { label: 'One', href: 'one', state: 'current' },
+    { label: 'Two', href: 'two' },
+    { label: 'Three', href: 'three' },
+    { label: 'Four', href: 'four' },
+    { label: 'Five', href: 'five' },
+    { label: 'Six', href: 'six' }
   ];
 }
 
@@ -91,10 +96,11 @@ describe('Soho Wizard Render', () => {
     fixture = TestBed.createComponent(SohoWizardTestComponent);
     component = fixture.componentInstance;
 
-    wizard = component.wizard;
-
     de = fixture.debugElement;
     el = de.query(By.css('div[soho-wizard]')).nativeElement;
+
+    fixture.detectChanges();
+    wizard = component.wizard;
   });
 
   it('Check HTML content', () => {

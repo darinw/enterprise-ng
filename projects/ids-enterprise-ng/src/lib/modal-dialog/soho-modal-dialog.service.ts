@@ -1,17 +1,16 @@
 /// <reference path="soho-modal-dialog.d.ts" />
 
 import {
-  ViewContainerRef,
+  ComponentFactoryResolver,
   Injectable,
   Injector,
-  ComponentFactoryResolver
+  NgZone,
+  ViewContainerRef,
+  ApplicationRef,
 } from '@angular/core';
 
 import { ArgumentHelper } from '../utils/argument.helper';
-
 import { SohoModalDialogRef } from './soho-modal-dialog.ref';
-
-import { SohoModalDialogInjector } from './soho-modal-dialog.injector';
 
 /**
  * This service is used to create a modal dialog, based on the content
@@ -22,12 +21,16 @@ export class SohoModalDialogService {
   /**
    * Constructor.
    *
+   * @param appRef - application reference; must not be null.
    * @param componentFactoryResolver - used to create component factories for components dynamically.
    * @param injector - the current in scope injector, use as a delegate.
+   * @param ngZone - the angular zone; must not be null.
    */
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private injector: Injector) {
+    private readonly appRef: ApplicationRef,
+    private readonly componentFactoryResolver: ComponentFactoryResolver,
+    private readonly injector: Injector,
+    private readonly ngZone: NgZone) {
   }
 
   /**
@@ -49,13 +52,10 @@ export class SohoModalDialogService {
     ArgumentHelper.checkNotNull('component', component);
     ArgumentHelper.checkNotNull('parent', parent);
 
-    const modalDialogRef = new SohoModalDialogRef<T>();
-    const dialogInjector = new SohoModalDialogInjector(modalDialogRef, this.injector);
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
-    const instance = parent.createComponent<T>(componentFactory, parent.length, dialogInjector);
-    instance.instance['options'] = options; // pass in any options/settings object to dialog()
-    modalDialogRef.component = instance;
-    return modalDialogRef;
+    options = options || {};
+
+    return new SohoModalDialogRef<T>(
+      this.appRef, this.componentFactoryResolver, this.injector, this.ngZone, options, component);
   }
 
   /**
@@ -67,14 +67,15 @@ export class SohoModalDialogService {
    * @return the modal dialog reference.
    */
   public message<T>(content: string | JQuery): SohoModalDialogRef<T> {
-    return new SohoModalDialogRef<T>()
-      .content(content);
+    const settings: SohoModalOptions = { content };
+
+    // Without a component, there is no destroy callback to ensure
+    // the dialog's markup is removed.
+    return new SohoModalDialogRef<T>(this.appRef, this.componentFactoryResolver, this.injector, this.ngZone, settings);
   }
 }
 
 /**
  * Object with a "new"" method returning the type T.
  */
-export interface ComponentType<T> {
-  new (...args: any[]): T;
-}
+export type ComponentType<T> = new (...args: any[]) => T;

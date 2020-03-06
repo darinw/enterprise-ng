@@ -14,12 +14,12 @@ import { TreeDemoService } from './tree-demo.service';
 
 @Component({
   selector: 'app-tree-service-demo',
-  templateUrl: './tree-service.demo.html',
+  templateUrl: 'tree-service.demo.html',
   providers: [{ provide: SohoTreeService, useClass: TreeDemoService }],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TreeServiceDemoComponent {
-  @ViewChild(SohoTreeComponent) tree: SohoTreeComponent;
+  @ViewChild(SohoTreeComponent, { static: true }) tree: SohoTreeComponent;
 
   enabled = true;
 

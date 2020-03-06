@@ -94,6 +94,21 @@ export class SohoStandalonePagerComponent implements AfterViewInit, AfterViewChe
     this.updateRequired = !!this.pager;
   }
 
+  @Input() set attachPageSizeMenuToBody(attachPageSizeMenuToBody: boolean) {
+    this.options.attachPageSizeMenuToBody = attachPageSizeMenuToBody;
+    this.updateRequired = !!this.pager;
+  }
+
+  @Input() set smallPageSizeSelector(smallPageSizeSelector: boolean) {
+    this.options.smallPageSizeSelector = smallPageSizeSelector;
+    this.updateRequired = !!this.pager;
+  }
+
+  @Input() set pageSizeMenuSettings(options: object) {
+    this.options.pageSizeMenuSettings = options;
+    this.updateRequired = !!this.pager;
+  }
+
   @Output() firstPage: EventEmitter<Object> = new EventEmitter<Object>();
   @Output() lastPage: EventEmitter<Object> = new EventEmitter<Object>();
   @Output() previousPage: EventEmitter<Object> = new EventEmitter<Object>();

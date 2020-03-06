@@ -13,13 +13,13 @@ import {
 
 @Component({
   selector: 'app-blockgrid-custom-content-demo',
-  templateUrl: './blockgrid-custom-content.demo.html',
+  templateUrl: 'blockgrid-custom-content.demo.html',
   styleUrls: ['./blockgrid-custom-content.demo.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlockGridCustomContentDemoComponent implements AfterViewInit {
 
-  @ViewChild(SohoBlockGridComponent) blockGrid: SohoBlockGridComponent;
+  @ViewChild(SohoBlockGridComponent, { static: true }) blockGrid: SohoBlockGridComponent;
 
   public data = DATA;
 

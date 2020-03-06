@@ -33,6 +33,9 @@ import { BulletDemoComponent } from './bullet/bullet.demo';
 import { BusyIndicatorDemoComponent } from './busyindicator/form.demo';
 import { BusyIndicatorDemoBodyComponent } from './busyindicator/body-sample.demo';
 import { ButtonDemoComponent } from './button/button.demo';
+import { CalendarDemoComponent } from './calendar/calendar.demo';
+import { CalendarLegendDemoComponent } from './calendar/calendar-legend.demo';
+import { CalendarUpdatedDemoComponent } from './calendar/calendar-updated.demo';
 import { ChartDemoComponent } from './chart/chart.demo';
 import { CheckBoxDemoComponent } from './checkbox/checkbox.demo';
 import { CirclepagerDemoComponent } from './circlepager/circlepager.demo';
@@ -48,7 +51,6 @@ import { CompletionChartDemoComponent } from './completion-chart/completion-char
 import { ContextMenuDemoComponent } from './context-menu/context-menu.demo';
 import { ContextualActionPanelDemoModule } from './contextual-action-panel/contextual-action-panel.demo.module';
 import { DataGridBreadcrumbDemoComponent } from './datagrid/datagrid-breadcrumb.demo';
-import { DataGridContentDemoComponent } from './datagrid/datagrid-content.demo';
 import {
   DataGridAngularEditorDemoComponent,
   DemoCellInputEditorComponent,
@@ -92,9 +94,12 @@ import { DataGridPagingIndeterminateDemoComponent } from './datagrid/datagrid-pa
 import { DatagridStandalonePagerDemoComponent } from './datagrid/datagrid-standalone-pager.demo';
 import { DataGridPagingServiceDemoComponent } from './datagrid/datagrid-paging-service.demo';
 import { DataGridRowReorderDemoComponent } from './datagrid/datagrid-rowreorder.demo';
+import { DataGridSaveUserSettingsDemoComponent } from './datagrid/datagrid-save-user-settings.demo';
 import { DataGridServiceDemoComponent } from './datagrid/datagrid-service.demo';
 import { DataGridSettingsDemoComponent } from './datagrid/datagrid-settings.demo';
+import { DataGridExpandableRowDemoComponent } from './datagrid/datagrid-expandable-row.demo';
 import { DataGridStandardFormatterDemoComponent } from './datagrid/datagrid-standard-formatter.demo';
+import { DataGridTabDemoComponent } from './datagrid/datagrid-tab.demo';
 import { DataGridTestSettingsDemoComponent } from './datagrid/datagrid-test-settings.demo';
 import { DataGridToolbarDemoComponent } from './datagrid/datagrid-toolbar.demo';
 import { DataGridTreeGridDemoComponent } from './datagrid/datagrid-treegrid.demo';
@@ -145,9 +150,10 @@ import { MaskLegacyDemoComponent } from './mask/mask-legacy.demo';
 import { MenuButtonDemoComponent } from './menu-button/menu-button.demo';
 import { MessageDemoComponent } from './message/message.demo';
 import { ModalDialogDemoModule } from './modal-dialog/modal-dialog.demo.module';
-import { MonthViewDemoComponent } from './monthview/monthview.demo';
+import { NotificationDemoComponent } from './notification/notification.demo';
 import { PagerStandaloneDemoComponent } from './pager/pager-standalone.demo';
 import { PersonalizeMenuComponent } from './personalize-menu/personalize-menu.component';
+import { PersonalizeColorApiDemoComponent } from './personalize/personalize-color-api.demo';
 import { PieDemoComponent } from './pie/pie.demo';
 import { PopDownDemoComponent } from './popdown/popdown.demo';
 import { PopupMenuDemoComponent } from './popupmenu/popupmenu.demo';
@@ -179,6 +185,7 @@ import { TabsDataDrivenDemoComponent } from './tabs/tabs-datadriven.demo';
 import { TabsDismissibleDemoComponent } from './tabs/tabs-dismissible.demo';
 import { TabsDropdownDemoComponent } from './tabs/tabs-dropdown.demo';
 import { TabsDynamicDemoComponent } from './tabs/tabs-dynamic.demo';
+import { TabsModuleDemoComponent } from './tabs/tabs-module.demo';
 import { TabsVerticalDemoComponent } from './tabs/tabs-vertical.demo';
 import { TagDemoComponent } from './tag/tag.demo';
 import { TestTabsBasicComponent } from './tabs/test-tabs-basic.demo';
@@ -189,6 +196,7 @@ import { ToolbarAllIconsDemoComponent } from './toolbar/toolbar-all-icons.demo';
 import { ToolbarBasicDemoComponent } from './toolbar/toolbar-basic.demo';
 import { ToolbarDataDrivenDemoComponent } from './toolbar/toolbar-datadriven.demo';
 import { ToolbarFlexBasicDemoComponent } from './toolbar-flex/toolbar-flex-basic.demo';
+import { ToolbarFlexDatagridDemoComponent } from './toolbar-flex/toolbar-flex-datagrid.demo';
 import { ToolbarFlexMoreActionsAjaxDemoComponent } from './toolbar-flex/toolbar-flex-more-actions-ajax.demo';
 import { ToolbarFlexSearchfieldDemoComponent } from './toolbar-flex/toolbar-flex-searchfield.demo';
 import { ToolbarMoreActionsAjaxDemoComponent } from './toolbar/toolbar-more-actions-ajax.demo';
@@ -214,6 +222,9 @@ import { WizardDemoSelectFilePageComponent } from './wizard/wizard-selected-file
 import { WizardDemoTargetFolderPageComponent } from './wizard/wizard-target-folder-page.demo';
 import { WizardDemoValidationRulesPageComponent } from './wizard/wizard-validation-rules-page.demo';
 import { LocaleInitializerModule } from './locale-initializer/locale-initializer.module';
+import { ApplicationMenuRoleSwitcherDemoComponent } from './application-menu/application-menu-roleswitcher.demo';
+import { DataGridTreeGridCubeDemoComponent } from './datagrid/datagrid-treegrid-cube.demo';
+import { WeekViewDemoComponent } from './week-view/week-view.demo';
 
 @NgModule({
   declarations: [
@@ -223,6 +234,7 @@ import { LocaleInitializerModule } from './locale-initializer/locale-initializer
     ApplicationMenuDemoComponent,
     ApplicationMenuLazyDemoComponent,
     ApplicationMenuLazyMenuDemoComponent,
+    ApplicationMenuRoleSwitcherDemoComponent,
     AreaDemoComponent,
     AutocompleteDemoComponent,
     BarDemoComponent,
@@ -238,6 +250,9 @@ import { LocaleInitializerModule } from './locale-initializer/locale-initializer
     BusyIndicatorDemoBodyComponent,
     ButtonDemoComponent,
     CardFormatterComponent,
+    CalendarDemoComponent,
+    CalendarLegendDemoComponent,
+    CalendarUpdatedDemoComponent,
     ChartDemoComponent,
     CheckBoxDemoComponent,
     CirclepagerDemoComponent,
@@ -254,7 +269,6 @@ import { LocaleInitializerModule } from './locale-initializer/locale-initializer
     ContextMenuDemoComponent,
     DataGridBreadcrumbDemoComponent,
     DataGridCardDemoComponent,
-    DataGridContentDemoComponent,
     DataGridAngularEditorDemoComponent,
     DataGridAngularFormatterDemoComponent,
     DataGridAngularCardFormatterDemoComponent,
@@ -277,12 +291,16 @@ import { LocaleInitializerModule } from './locale-initializer/locale-initializer
     DatagridStandalonePagerDemoComponent,
     DataGridPagingServiceDemoComponent,
     DataGridRowReorderDemoComponent,
+    DataGridSaveUserSettingsDemoComponent,
     DataGridServiceDemoComponent,
     DataGridSettingsDemoComponent,
+    DataGridExpandableRowDemoComponent,
     DataGridStandardFormatterDemoComponent,
+    DataGridTabDemoComponent,
     DataGridTestSettingsDemoComponent,
     DataGridToolbarDemoComponent,
     DataGridTreeGridDemoComponent,
+    DataGridTreeGridCubeDemoComponent,
     DatagridTreegridDynamicfilteringDemoComponent,
     DataGridGroupableDemoComponent,
     DatepickerDemoComponent,
@@ -334,8 +352,9 @@ import { LocaleInitializerModule } from './locale-initializer/locale-initializer
     MaskLegacyDemoComponent,
     MenuButtonDemoComponent,
     MessageDemoComponent,
-    MonthViewDemoComponent,
+    NotificationDemoComponent,
     PagerStandaloneDemoComponent,
+    PersonalizeColorApiDemoComponent,
     PersonalizeMenuComponent,
     PieDemoComponent,
     PopDownDemoComponent,
@@ -368,6 +387,7 @@ import { LocaleInitializerModule } from './locale-initializer/locale-initializer
     TabsDismissibleDemoComponent,
     TabsDropdownDemoComponent,
     TabsDynamicDemoComponent,
+    TabsModuleDemoComponent,
     TabsVerticalDemoComponent,
     TagDemoComponent,
     TestTabsBasicComponent,
@@ -378,6 +398,7 @@ import { LocaleInitializerModule } from './locale-initializer/locale-initializer
     ToolbarBasicDemoComponent,
     ToolbarDataDrivenDemoComponent,
     ToolbarFlexBasicDemoComponent,
+    ToolbarFlexDatagridDemoComponent,
     ToolbarFlexMoreActionsAjaxDemoComponent,
     ToolbarFlexSearchfieldDemoComponent,
     ToolbarMoreActionsAjaxDemoComponent,
@@ -395,6 +416,7 @@ import { LocaleInitializerModule } from './locale-initializer/locale-initializer
     ValidationFormDemoComponent,
     ValidationFormEventDemoComponent,
     ValidationFormGroupDemoComponent,
+    WeekViewDemoComponent,
     WizardDemoComponent,
     WizardDemoConfirmationPageComponent,
     WizardDemoSelectFilePageComponent,

@@ -9,12 +9,12 @@ import { SohoTreeComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-tree-content-demo',
-  templateUrl: './tree-content.demo.html',
+  templateUrl: 'tree-content.demo.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TreeContentDemoComponent {
 
-  @ViewChild(SohoTreeComponent) tree: SohoTreeComponent;
+  @ViewChild(SohoTreeComponent, { static: true }) tree: SohoTreeComponent;
 
   // Is this component enabled.
   enabled = true;

@@ -3,11 +3,11 @@ import { SohoStepProcessComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-stepprocessbuttondisable-demo',
-  templateUrl: './stepprocessbuttondisable.demo.html'
+  templateUrl: 'stepprocessbuttondisable.demo.html'
 })
 export class StepProcessBtnDisableDemoComponent implements AfterViewInit {
 
-  @ViewChild('sohoStepProcessComponent') sohoStepProcessComponent: SohoStepProcessComponent;
+  @ViewChild('sohoStepProcessComponent', { static: true }) sohoStepProcessComponent: SohoStepProcessComponent;
 
   ngAfterViewInit() {
     this.sohoStepProcessComponent.previousButtonEnable = false;

@@ -17,18 +17,23 @@ import { SohoToastService } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-datagrid-service-demo',
-  templateUrl: './datagrid-service.demo.html',
+  templateUrl: 'datagrid-service.demo.html',
   providers: [ { provide: SohoDataGridService, useClass: DataGridDemoService }, SohoToastService ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataGridServiceDemoComponent {
-  @ViewChild(SohoDataGridComponent) dataGrid: SohoDataGridComponent;
-  @ViewChild(SohoBusyIndicatorDirective) busyIndicator: SohoBusyIndicatorDirective;
+  @ViewChild(SohoDataGridComponent, { static: true }) dataGrid: SohoDataGridComponent;
+  @ViewChild(SohoBusyIndicatorDirective, { static: true }) busyIndicator: SohoBusyIndicatorDirective;
   constructor(private el: ElementRef, private toastService: SohoToastService) {
   }
 
   onSelected(e: SohoDataGridSelectedEvent) {
-    this.toastService.show({title: 'Selected', message: `${e.rows[0].data.productId}`});
+    if (e.rows && e.rows.length) {
+      this.toastService.show({
+        title: 'Selected',
+        message: e.rows.map(row => row.data ? row.data.productId : false).join(', ')
+      });
+    }
   }
 
   onOpenFilterRow(e: SohoDataGridOpenFilterRowEvent) {
@@ -37,6 +42,10 @@ export class DataGridServiceDemoComponent {
 
   onCloseFilterRow(e: SohoDataGridCloseFilterRowEvent) {
     this.toastService.show({title: 'Filterbar', message: 'filter row closed'});
+  }
+
+  public onBeforeSelect = (eventData: SohoDataGridBeforeSelectEventData) => {
+   console.log(eventData, Soho.keyboard.pressedKeys);
   }
 
   busy() {
@@ -56,5 +65,10 @@ export class DataGridServiceDemoComponent {
   }
 
   addRow() {
+  }
+
+  export() {
+    this.dataGrid.exportToExcel('my-export');
+    this.dataGrid.exportToCsv('my-export');
   }
 }

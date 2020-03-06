@@ -17,7 +17,7 @@ import {
 
 @Component({
   selector: 'button[soho-menu-button]', // tslint:disable-line
-  templateUrl: './soho-menu-button.component.html',
+  templateUrl: 'soho-menu-button.component.html',
   styleUrls: ['./soho-menu-button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -125,12 +125,37 @@ export class SohoMenuButtonComponent implements AfterViewInit, AfterViewChecked,
     this.buttonOptions.hideMenuArrow = value;
     if (this.button) {
       this.button.settings.hideMenuArrow = value;
-      // todo: how to update the button when hideMenuArrow changes?
+      this.markForRefresh();
+      // todo: menubutton.js updated() function doesn't seem to tear down the control and rebuild with new settings
     }
   }
 
   get hideMenuArrow(): boolean {
     return this.buttonOptions.hideMenuArrow;
+  }
+
+  @Input() set attachToBody(value: boolean) {
+    this.options.attachToBody = value;
+    if (this.menuButton) {
+      this.menuButton.settings.attachToBody = value;
+      this.markForRefresh();
+    }
+  }
+
+  get attachToBody(): boolean {
+    return this.options.attachToBody;
+  }
+
+  @Input() set removeOnDestroy(value: boolean) {
+    this.options.removeOnDestroy = value;
+    if (this.menuButton) {
+      this.menuButton.settings.removeOnDestroy = value;
+      this.markForRefresh();
+    }
+  }
+
+  get removeOnDestroy(): boolean {
+    return this.options.removeOnDestroy;
   }
 
   constructor(
@@ -165,10 +190,10 @@ export class SohoMenuButtonComponent implements AfterViewInit, AfterViewChecked,
 
       // Add listeners to emit events
       this.jQueryElement
-        .on('selected', (e: JQuery.TriggeredEvent, args: JQuery) => this.onSelected(e, args))
-        .on('beforeopen', (e: JQuery.TriggeredEvent, args: JQuery) => this.onBeforeOpen(e, args))
-        .on('close', (e: JQuery.TriggeredEvent, args: JQuery) => this.onClose(e, args))
-        .on('open', (e: JQuery.TriggeredEvent, args: JQuery) => this.onOpen(e, args));
+      .on('selected', (e: JQuery.TriggeredEvent, args: JQuery) => this.onSelected(e, args))
+      .on('beforeopen', (e: JQuery.TriggeredEvent, args: JQuery) => this.onBeforeOpen(e, args))
+      .on('close', (e: JQuery.TriggeredEvent, args: JQuery) => this.onClose(e, args))
+      .on('open', (e: JQuery.TriggeredEvent, args: JQuery) => this.onOpen(e, args));
     });
   }
 

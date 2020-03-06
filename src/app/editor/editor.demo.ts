@@ -1,6 +1,6 @@
 import {
   Component,
-  OnInit ,
+  OnInit,
   ViewChild,
   AfterViewInit
 } from '@angular/core';
@@ -10,10 +10,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {
   SohoEditorComponent
 } from 'ids-enterprise-ng';
+import { AlertDemoComponent } from '../alert/alert.demo';
 
 @Component({
   selector: 'app-editor-demo',
-  templateUrl: './editor.demo.html',
+  templateUrl: 'editor.demo.html',
   styles: [`pre{font-size: 15px}`] // set font size to be larger so pre tag content is more readable
 })
 export class EditorDemoComponent implements AfterViewInit {
@@ -66,6 +67,10 @@ export class EditorDemoComponent implements AfterViewInit {
 
   }
 
+  onUpdated(event) {
+    alert(event);
+  }
+
   toggleModel() {
     this.showModel = !this.showModel;
   }
@@ -86,4 +91,7 @@ export class EditorDemoComponent implements AfterViewInit {
     this.editorReadOnly = this.editor.readonly;
   }
 
+  onChange(event: any) {
+    console.log(`changed: ${event}`);
+  }
 }

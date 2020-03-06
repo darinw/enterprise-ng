@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { SohoHyperlinkModule } from './soho-hyperlink.module';
 import { SohoHyperlinkComponent } from './soho-hyperlink.component';
 
-@Component ({
+@Component({
   template: `
     <a soho-hyperlink href="#">More Information Hyperlink</a><br><br><br><br>
     <a soho-hyperlink="show-visited" href="#">More Information Hyperlink</a><br><br><br><br>
@@ -19,34 +19,34 @@ class SohoHyperlinkTestComponent {
   @ViewChild(SohoHyperlinkComponent) hyperlink: SohoHyperlinkComponent;
 }
 
-describe ('Soho Hyperlink Unit tests', () => {
-  let hyperlink:   SohoHyperlinkComponent;
-  let comp:     SohoHyperlinkTestComponent;
-  let fixture:  ComponentFixture<SohoHyperlinkTestComponent>;
-  let de:       DebugElement;
-  let el0:       HTMLElement;
-  let el1:       HTMLElement;
-  let el2:       HTMLElement;
-  let el3:       HTMLElement;
+describe('Soho Hyperlink Unit tests', () => {
+  let hyperlink: SohoHyperlinkComponent;
+  let comp: SohoHyperlinkTestComponent;
+  let fixture: ComponentFixture<SohoHyperlinkTestComponent>;
+  let de: DebugElement;
+  let el0: HTMLElement;
+  let el1: HTMLElement;
+  let el2: HTMLElement;
+  let el3: HTMLElement;
 
-  beforeEach( () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ SohoHyperlinkTestComponent ],
-      imports: [ FormsModule, SohoHyperlinkModule ]
+      declarations: [SohoHyperlinkTestComponent],
+      imports: [FormsModule, SohoHyperlinkModule]
     });
     TestBed.compileComponents();
 
     fixture = TestBed.createComponent(SohoHyperlinkTestComponent);
     comp = fixture.componentInstance;
-    hyperlink = comp.hyperlink;
-
     de = fixture.debugElement;
     const el = de.queryAll(By.css('a[soho-hyperlink]'));
     el0 = el[0].nativeElement;
     el1 = el[1].nativeElement;
     el2 = el[2].nativeElement;
     el3 = el[3].nativeElement;
+
     fixture.detectChanges();
+    hyperlink = comp.hyperlink;
   });
 
   it('Verify Hyperlink elements', () => {
@@ -54,7 +54,6 @@ describe ('Soho Hyperlink Unit tests', () => {
     expect(el0.nodeName).toEqual('A');
     expect(el0.classList[0]).toContain('hyperlink');
     expect(el0.getAttribute('href')).toEqual(hyperlink.href);
-
   });
 
   it('Hyperlink disabled', () => {
@@ -73,7 +72,7 @@ describe ('Soho Hyperlink Unit tests', () => {
 
   it('Hyperlink directional - caret right', () => {
     fixture.detectChanges();
-    expect(el2.classList[1]).toEqual('directional');
+    expect(el2.classList).toContain('directional');
     expect(el2.hasAttribute('isCaretRight')).toBeTruthy();
     fixture.detectChanges();
     expect(el2.children[1].classList[0]).toEqual('icon');
@@ -82,7 +81,7 @@ describe ('Soho Hyperlink Unit tests', () => {
 
   it('Hyperlink back - caret left', () => {
     fixture.detectChanges();
-    expect(el3.classList[1]).toEqual('back');
+    expect(el3.classList).toContain('back');
     expect(el3.hasAttribute('isCaretLeft')).toBeTruthy();
     fixture.detectChanges();
     expect(el3.children[0].classList[0]).toEqual('icon');

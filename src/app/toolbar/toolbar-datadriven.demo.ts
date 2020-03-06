@@ -8,12 +8,12 @@ import {ToolbarDataDrivenDemoService} from './toolbar-datadriven-demo.service';
 
 @Component({
     selector: 'app-toolbar-datadriven-demo',
-    templateUrl: './toolbar-datadriven.demo.html',
+    templateUrl: 'toolbar-datadriven.demo.html',
     providers: [ToolbarDataDrivenDemoService]
 })
 export class ToolbarDataDrivenDemoComponent implements OnInit {
 
-  @ViewChild('sohoToolbar') sohoToolbar: any;
+  @ViewChild('sohoToolbar', { static: true }) sohoToolbar: any;
 
   public pageTitle: string;
   public sectionTitle: string;

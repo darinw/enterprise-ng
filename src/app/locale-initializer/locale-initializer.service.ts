@@ -1,5 +1,4 @@
 import { LOCALE_ID, Inject, Injectable } from '@angular/core';
-import { extend } from 'jquery';
 import { APP_BASE_HREF } from '@angular/common';
 
 export interface Translation {
@@ -27,41 +26,45 @@ export class LocaleInitializerService {
   constructor(
     @Inject(LOCALE_ID) private readonly locale: string,
     @Inject(APP_BASE_HREF) private readonly baseHref: string) {
-      this.language = this.locale.substr(0, 2);
-      console.log(`locale=${locale}, baseHref=${baseHref}, language=${this.language}`);
-    }
+    this.language = this.locale.substr(0, 2);
+    console.log(`locale=${locale}, baseHref=${baseHref}, language=${this.language}`);
+  }
 
   /**
    * Initializes the locale for this web application.
    */
   async initialize() {
+    console.log(`Setting Soho.Locale.culturesPath = ${this.baseHref}assets/ids-enterprise/js/cultures/`);
     Soho.Locale.culturesPath = `${this.baseHref}assets/ids-enterprise/js/cultures/`;
 
-    // Wait for the locales to be loaded before starting the
-    // application.
-    await Soho.Locale.set(this.locale).done(() => {
-      // This is a good place to load any additional translations to
-      // augment those provided by the enterprise controls.
+    // The promise returned when setting the locale can relate to the
+    // implicitly loaded default locale whilst the application's
+    // LOCALE_ID is loaded, to avoid this the default locale is loaded
+    // first.
+    await Soho.Locale.set(this.locale).then(() => {
+      const currentLanguageName = Soho.Locale.currentLanguage.name;
+      const currentLanguageNativeName = Soho.Locale.currentLanguage.nativeName;
 
-      const base = Soho.Locale.cultures[this.locale];
+      console.log(`${currentLanguageNativeName} loaded.`);
+
       // This is an example of extending the resources provided by
       // the enterprise controls, and made available to the sohoTranslate
       // pipe.  These can be loaded explicitly, or via an http
       // call to the backend.
       const translations: Translation[] = []; // <-- set this to the additional translations
-      translations['QuickStartButtonText'] = {
-        id: 'QuickStartButtonText',
-        value: 'Click Me!',
+      translations['Locales'] = {
+        id: 'Locales',
+        value: 'Locales!',
         comment: ''
       };
 
       // ... once loaded (async if required), merge the translations into the core set.
-      Soho.Locale.extendTranslations(this.language, translations);
-      console.log('Enterprise Locale Initialised.');
+      Soho.Locale.extendTranslations(currentLanguageName, translations);
+      console.log(`${currentLanguageNativeName} loaded and extended.`);
     });
   }
 }
 
 export function LocaleInitializerFactory(service: LocaleInitializerService) {
-    return () => service.initialize();
+  return () => service.initialize();
 }

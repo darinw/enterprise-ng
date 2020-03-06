@@ -4,12 +4,13 @@ import {
   ViewContainerRef,
   Injectable,
   Injector,
-  ComponentFactoryResolver
+  ComponentFactoryResolver,
+  ApplicationRef,
+  NgZone
 } from '@angular/core';
 
 import { ArgumentHelper } from '../utils/argument.helper';
 import { SohoContextualActionPanelRef } from './soho-contextual-action-panel.ref';
-import { SohoContextualActionPanelInjector } from './soho-contextual-action-panel.injector';
 
 /**
  * This service is used to create a panel panel, based on the content
@@ -20,12 +21,16 @@ export class SohoContextualActionPanelService {
   /**
    * Constructor.
    *
+   * @param appRef - application reference; must not be null.
    * @param componentFactoryResolver - used to create component factories for components dynamically.
    * @param injector - the current in scope injector, use as a delegate.
+   * @param ngZone - the angular zone; must not be null.
    */
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private injector: Injector) {
+    private readonly appRef: ApplicationRef,
+    private readonly componentFactoryResolver: ComponentFactoryResolver,
+    private readonly injector: Injector,
+    private readonly ngZone: NgZone) {
   }
 
   /**
@@ -39,26 +44,21 @@ export class SohoContextualActionPanelService {
    *
    * @param component - the type of the component to instantiate; must not be null.
    * @param parent - the parent container; must not be null.
+   * @param options - the default options for the panel; optional.
    *
    * @return the panel reference.
    */
-  public contextualactionpanel<T>(component: PanelComponentType<T>, parent: ViewContainerRef, options?): SohoContextualActionPanelRef<T> {
+  public contextualactionpanel<T>(component: PanelComponentType<T>, parent: ViewContainerRef,
+    options?: SohoContextualActionPanelOptions): SohoContextualActionPanelRef<T> {
     ArgumentHelper.checkNotNull('component', component);
     ArgumentHelper.checkNotNull('parent', parent);
 
-    const panelRef = new SohoContextualActionPanelRef<T>();
-    const panelInjector = new SohoContextualActionPanelInjector(panelRef, this.injector);
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
-    const instance = parent.createComponent<T>(componentFactory, parent.length, panelInjector);
-    instance.instance['options'] = options; // pass in any options/settings object to panel()
-    panelRef.component = instance;
-    return panelRef;
+    return new SohoContextualActionPanelRef<T>(
+      this.appRef, this.componentFactoryResolver, this.injector, this.ngZone, options, component);
   }
 }
 
 /**
  * Object with a "new"" method returning the type T.
  */
-export interface PanelComponentType<T> {
-  new (...args: any[]): T;
-}
+export type PanelComponentType<T> = new (...args: any[]) => T;

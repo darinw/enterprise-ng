@@ -10,7 +10,7 @@ import { DataGridDemoService } from './datagrid-demo.service';
 
 @Component({
   selector: 'app-datagrid-empty-message-demo',
-  templateUrl: './datagrid-empty-message.demo.html',
+  templateUrl: 'datagrid-empty-message.demo.html',
   providers: [ DataGridDemoService ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -31,7 +31,7 @@ export class DataGridEmptyMessageDemoComponent implements AfterViewInit {
     color: 'azure'
   };
 
-  @ViewChild(SohoDataGridComponent) dataGrid: SohoDataGridComponent;
+  @ViewChild(SohoDataGridComponent, { static: true }) dataGrid: SohoDataGridComponent;
 
   public hasData: boolean;
   public emptyMessage: SohoEmptyMessageOptions = DataGridEmptyMessageDemoComponent.EMPTY_MSG_SERVER_ERROR;

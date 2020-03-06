@@ -16,10 +16,10 @@ import { WizardDemoResultPageComponent } from './wizard-result-page.demo';
 
 @Component({
   selector: 'app-wizard-demo',
-  templateUrl: './wizard.demo.html',
+  templateUrl: 'wizard.demo.html',
 })
 export class WizardDemoComponent {
-  @ViewChild(SohoWizardComponent) wizard: SohoWizardComponent;
+  @ViewChild(SohoWizardComponent, { static: true }) wizard: SohoWizardComponent;
 
   public buttons = [
     {

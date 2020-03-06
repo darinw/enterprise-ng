@@ -10,11 +10,11 @@ import {
 
 @Component({
   selector: 'app-timepicker-demo',
-  templateUrl: './timepicker.demo.html',
+  templateUrl: 'timepicker.demo.html',
 })
 export class TimePickerDemoComponent implements OnInit {
 
-  @ViewChild(SohoTimePickerComponent) timepicker: SohoTimePickerComponent;
+  @ViewChild(SohoTimePickerComponent, { static: true }) timepicker: SohoTimePickerComponent;
 
   public model = { // tslint:disable-line
     hhmm: '1:23 PM',

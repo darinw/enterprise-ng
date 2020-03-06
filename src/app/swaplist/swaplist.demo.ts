@@ -10,10 +10,10 @@ import { HeaderDynamicDemoRefService } from '../header/header-dynamic-demo-ref.s
 
 @Component({
   selector: 'app-swaplist-demo',
-  templateUrl: './swaplist.demo.html',
+  templateUrl: 'swaplist.demo.html',
 })
 export class SwapListDemoComponent implements OnInit, OnDestroy {
-  @ViewChild(SohoSwapListComponent) swapListComponent: SohoSwapListComponent;
+  @ViewChild(SohoSwapListComponent, { static: true })swapListComponent: SohoSwapListComponent;
 
   allDemoItems: any[] = [];
   availableDemoItems: any[] = [];

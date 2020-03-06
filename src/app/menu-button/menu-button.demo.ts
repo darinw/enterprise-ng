@@ -3,12 +3,13 @@ import { SohoMenuButtonComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-menu-button-demo',
-  templateUrl: './menu-button.demo.html',
+  templateUrl: 'menu-button.demo.html',
 })
 export class MenuButtonDemoComponent implements OnInit, AfterViewInit {
-  @ViewChild('ajax')ajaxMenuButton: SohoMenuButtonComponent;
+  @ViewChild('ajax', { static: true })ajaxMenuButton: SohoMenuButtonComponent;
   public menuButtons: Array<any>;
 
+  public showLastOption: boolean;
   public toggle: boolean;
 
   private SUBMENU_RESPONSE_HTML = `
@@ -70,6 +71,7 @@ export class MenuButtonDemoComponent implements OnInit, AfterViewInit {
    }
 
   ngOnInit() {
+    this.showLastOption = true;
     this.menuButtons = [
       {
         label: 'Add',

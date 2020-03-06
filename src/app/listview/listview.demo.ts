@@ -13,7 +13,7 @@ import { ContentTypeService } from './content-type.service';
 
 @Component({
   selector: 'app-listview-demo',
-  templateUrl: './listview.demo.html',
+  templateUrl: 'listview.demo.html',
   styles: [`
     .smaller-width {
       width: calc(100% - 39px);
@@ -23,11 +23,11 @@ import { ContentTypeService } from './content-type.service';
 })
 export class ListViewDemoComponent implements OnInit {
 
-  @ViewChild('singleSelectListView') singleSelectListView: SohoListViewComponent;
+  @ViewChild('singleSelectListView', { static: true }) singleSelectListView: SohoListViewComponent;
 
-  @ViewChild('multipleSelectListView') multipleSelectListView: SohoListViewComponent;
+  @ViewChild('multipleSelectListView', { static: true }) multipleSelectListView: SohoListViewComponent;
 
-  @ViewChild('mixedSelectionListView') mixedSelectionListView: SohoListViewComponent;
+  @ViewChild('mixedSelectionListView', { static: true }) mixedSelectionListView: SohoListViewComponent;
 
   public errorMessage: any;
   public demoTasks: Object[];

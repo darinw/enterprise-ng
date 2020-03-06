@@ -13,12 +13,12 @@ import {
 
 @Component({
   selector: 'app-datagrid-rowreorder-demo',
-  templateUrl: './datagrid-rowreorder.demo.html',
+  templateUrl: 'datagrid-rowreorder.demo.html',
   providers: [ { provide: SohoDataGridService, useClass: DataGridDemoService } ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataGridRowReorderDemoComponent {
-  @ViewChild(SohoDataGridComponent) datagrid: SohoDataGridComponent;
+  @ViewChild(SohoDataGridComponent, { static: true }) datagrid: SohoDataGridComponent;
 
   constructor(gridService: SohoDataGridService) {
     (gridService as DataGridDemoService).addColumn({

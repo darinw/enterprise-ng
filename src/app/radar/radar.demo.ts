@@ -8,11 +8,11 @@ import {SohoRadarComponent} from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-radar-demo',
-  templateUrl: './radar.demo.html',
+  templateUrl: 'radar.demo.html',
 })
 export class RadarDemoComponent implements OnInit {
 
-  @ViewChild(SohoRadarComponent) sohoRadarComponent: SohoRadarComponent;
+  @ViewChild(SohoRadarComponent, { static: true }) sohoRadarComponent: SohoRadarComponent;
 
   // The following multiple "private selection" definitions are all examples of ways to set the selection on the chart
   // private selection: SohoRadarSelected  = {fieldName: 'name', fieldValue: 'Samsung'};

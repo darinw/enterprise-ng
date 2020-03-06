@@ -8,49 +8,31 @@ For information on how to create these libraries, see [Creating A Library][#CAL]
 
 Consuming the `ids-enterprise-ng` package will require changes to any projects referencing it.
 
-### Upgrade Angular and Angular/CLI
+### Upgrade angular and angular/cli
 
-These instructions assume you will be running the latest versions of `@angular/cli` and `@angular/core`. It is recommended that you review the information on <https://update.angular.io> before updating.
+These instructions assume you will be running the latest versions of `@angular/cli` and `@angular/core`. It is recommended that you review the information on <https://update.angular.io> before updating.  Also read <https://next.angular.io/guide/updating-to-version-9> for a detailed description of changes to angular.
 
-Note: The libraries are currently compiled using angular 7, and so require all consumers to use the same major version.
+Note: The libraries are currently compiled using angular 9, and so require all consumers to use the same major version.
 
 These are the steps for upgrading existing projects:
 
 ```sh
-npm install @angular/cli
+npm install @angular/cli@latest
 ng update @angular/cli @angular/core
 ng update
 ```
 
 You will need to fix any issues raised, as these will depend on the dependency tree created by the packages you use and what version you are upgrading from.
 
-#### Angular 7
+#### Angular 8
 
-When updating (and depending on your dependencies) the update *may* not complete, and this is often because one of the referenced packages has a dependency on an older version of TypeScript.  If this is the case, install TypeScript 3.2.2 first, as follows:
-
-```sh
-npm i typescript@3.2.2
-```
-
-Then try again.
-
-Also note that some packages may not be updated automatically, for example the following failed when updating the `ids-enterprise-quickstart` application:
-
-- codelyzer - the recommended version at the time of writing is ~4.6.0
-- @angular-devkit/build-angular - the recommended version at the time of writing is ~0.12.0
-
-Simply update these manually:
+When updating (and depending on your dependencies) the update *may* not complete, and this is often because one of the referenced packages has a dependency on an older version of TypeScript.  If this is the case, install TypeScript 3.7.x first, as follows:
 
 ```sh
-npm i codelyzer@4.6.0
-npm i @angular-devkit/build-angular@0.12.0
+npm i typescript@3.7.4
 ```
 
-Then try again.
-
-If your project includes sub-projects (`angular/cli` libraries) then you may find additional issues similar to the above, the general approach is to determine the package with the compatibility problem and install a compatible version before running `ng update`.
-
-### Uninstall old dependencies
+### Uninstall old dependencies (for code upgrading from a version of ids-enterprise-ng before version 5)
 
 These are now included as part of the ids-enterprise-ng package):
 
@@ -68,7 +50,7 @@ Install the latest `ids-enterprise-ng` components.
 npm install ids-enterprise-ng@latest -S
 ```
 
-### Remove compilation
+### Remove compilation (for code upgrading from a version of ids-enterprise-ng before 5)
 
 In the `tsconfig.ts` and `src/tsconfig.*.ts` files of your project, remove the compilation of the older `ids-enterprise-ng` package (if present), for example in:
 

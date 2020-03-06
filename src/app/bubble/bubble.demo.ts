@@ -8,11 +8,11 @@ import { SohoLineComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-line-demo',
-  templateUrl: './bubble.demo.html',
+  templateUrl: 'bubble.demo.html',
 })
 export class BubbleDemoComponent implements OnInit {
 
-  @ViewChild(SohoLineComponent) sohoLineComponent: SohoLineComponent;
+  @ViewChild(SohoLineComponent, { static: true }) sohoLineComponent: SohoLineComponent;
 
   // The following multiple "private selection" definitions are all examples of ways to set the selection on the chart
   private selection: SohoLineSelected  = {groupIndex: 0};

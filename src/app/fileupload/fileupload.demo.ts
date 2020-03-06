@@ -11,12 +11,12 @@ import {
 
 @Component({
   selector: 'app-fileupload-demo',
-  templateUrl: './fileupload.demo.html'
+  templateUrl: 'fileupload.demo.html'
 })
 export class FileUploadDemoComponent implements OnInit {
 
-  @ViewChild(SohoFileUploadComponent) fileupload: SohoFileUploadComponent;
-  @ViewChild(SohoTrackDirtyDirective) trackdirty: SohoTrackDirtyDirective;
+  @ViewChild(SohoFileUploadComponent, { static: true }) fileupload: SohoFileUploadComponent;
+  @ViewChild(SohoTrackDirtyDirective, { static: true }) trackdirty: SohoTrackDirtyDirective;
 
   public limitLabel = 'Limited to xls, xlsx and csv';
   public name1 = 'file-name';
@@ -63,5 +63,9 @@ export class FileUploadDemoComponent implements OnInit {
 
   onPristine(event: SohoTrackDirtyEvent) {
     console.log('onPristine');
+  }
+
+  onChange(event: any) {
+    console.log('onChange', event);
   }
 }

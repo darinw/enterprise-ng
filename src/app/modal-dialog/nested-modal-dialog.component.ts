@@ -14,7 +14,7 @@ import {
  * numerous times using the SohoModalDialogService.
  */
 @Component({
-  templateUrl: './nested-modal-dialog.component.html',
+  templateUrl: 'nested-modal-dialog.component.html',
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NestedModalDialogComponent {
@@ -27,14 +27,13 @@ export class NestedModalDialogComponent {
    *
    * This can be the ViewContainerRef of this component, or another component.
    */
-  @ViewChild('dialogPlaceholder', { read: ViewContainerRef })
+  @ViewChild('dialogPlaceholder', { read: ViewContainerRef, static: true })
   placeholder: ViewContainerRef;
 
   /**
    * Constructor, taking the interface to the Soho Modal Dialog Api.
    */
   constructor(
-    private dialogRef: SohoModalDialogRef<NestedModalDialogComponent>,
     private dialog: SohoModalDialogService) {
   }
 
@@ -47,8 +46,8 @@ export class NestedModalDialogComponent {
       .modal(NestedModalDialogComponent, this.placeholder)
       .title(`Modal Dialog no. '${++NestedModalDialogComponent.s_depth}'.`)
       .buttons(
-        [{text: 'Cancel', click: (e, modal) => { modal.close(true); }},
-         {text: 'OK', click: (e, modal) => { modal.close(true); }, isDefault: true}])
+        [{ text: 'Cancel', click: (e, modal) => { modal.close(true); } },
+        { text: 'OK', click: (e, modal) => { modal.close(true); }, isDefault: true }])
       .afterClose((f) => { NestedModalDialogComponent.s_depth--; })
       .open();
   }

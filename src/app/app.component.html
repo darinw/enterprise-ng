@@ -1,11 +1,11 @@
 <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
 
-<soho-icons-ext></soho-icons-ext>
-
 <soho-icons *ngIf="!useUpliftIcons"></soho-icons>
 <soho-icons-uplift *ngIf="useUpliftIcons"></soho-icons-uplift>
 
-<soho-icons-empty></soho-icons-empty>
+<soho-icons-empty *ngIf="!useUpliftIcons"></soho-icons-empty>
+<soho-icons-empty-uplift *ngIf="useUpliftIcons"></soho-icons-empty-uplift>
+
 <app-masthead-demo></app-masthead-demo>
 
 <nav soho-application-menu class="is-personalizable" [filterable]="true" [openOnLarge]="false"

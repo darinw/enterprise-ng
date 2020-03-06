@@ -57,20 +57,49 @@ are copied into src/app/icon.
     npm run update-enterprise
     ```
 
-1. Create a PR to be merged
+1. Create a PR to be merged or, if releasing, go ahead and commit/push to the version branch.
 
 ### Release
 
-1. Make sure you have release-it installed (`npm install release-it -g`)
-1. Checkout the release branch (`A.B.x`) and `git pull --tags`
-    - Set the master branch to the next minor dev version. For example if we made branch `4.9.x`, then the `master` projects/ids-enterprise-ng/package.json version should now be changed to `4.10.0-dev`
-    - "Protect" the release branch with github settings
+1. Make sure you ran `npm run update-enterprise` to update the version (see previous section).
+1. Check if the angular dependencies need a minor update to latest. This is done by:
+    - `ng update @angular/cli @angular/core`
+    - Update peer dependencies in projects/ids-enterprise-ng/package.json
+1. Commit the update (see previous section).
+1. Checkout the release branch (`#.#.x`) and `git pull --tags`
+    - If you have just created the release branch, verify it is "Protected" in github settings
+1. Update ids-enteprise to the version it needs (see section above)
 1. Run a release cmd:
     - `npm run release:beta` - beta
     - `npm run release:rc` - release candidate normally the final testing branch before the release
-    - `release:final` - the release itself
+    - `npm run release:final` - the release itself
     - **Always** verify the release version when the script asks
+1. Set the master branch to the next minor dev version.
+    - For example if we made branch `4.9.x`, then the `master` projects/ids-enterprise-ng/package.json version should now be changed to `4.10.0-dev`
+1. Run `npm run sync:lib` after setting the master branch version
+1. Commit the version change and push to master
 
 For a final release, finish with:
 
-1. Merge the release branch (`X.Y.Z`) back into `master` but keep branch (`X.Y.Z`)
+1. Merge the release branch `#.#.x` back into `master` (but keep branch `#.#.x`)
+
+    ```sh
+    git checkout master
+    git pull origin master
+    git merge <release branch>
+    ```
+
+1. Fix any conflicts (don't commit yet)
+1. Use the version sync script after verifying or correcting the `master` branch version (don't commit yet)
+
+    ```sh
+    npm run sync:lib
+    ```
+
+1. Commit the version change (and any merge conflict fixes) and push to `master`
+
+    ```sh
+    git push origin master
+    ```
+
+1. Update the ids-enterprise-quickstart with the new versions

@@ -8,11 +8,11 @@ import { SohoSliderComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-slider-demo',
-  templateUrl: './slider.demo.html',
+  templateUrl: 'slider.demo.html',
   styles: [`pre{font-size: 15px}`] // set font size to be larger so pre tag content is more readable
 })
 export class SliderDemoComponent implements OnInit {
-  @ViewChild(SohoSliderComponent) slider: SohoSliderComponent;
+  @ViewChild(SohoSliderComponent, { static: true }) slider: SohoSliderComponent;
 
   public sliderDisabled = false;
   public sliderReadOnly = false;

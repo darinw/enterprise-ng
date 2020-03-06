@@ -12,7 +12,7 @@ import { SohoToolbarComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'toolbar-state-demo', // tslint:disable-line
-  templateUrl: './toolbar-state.demo.html',
+  templateUrl: 'toolbar-state.demo.html',
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToolbarStateDemoComponent implements AfterViewChecked, OnInit {
@@ -24,7 +24,7 @@ export class ToolbarStateDemoComponent implements AfterViewChecked, OnInit {
   public _maxVisibleButtons: number;
   private updateToolbar = false;
 
-  @ViewChild('SohoToolbarComponent') sohoToolbar: SohoToolbarComponent;
+  @ViewChild('SohoToolbarComponent', { static: true }) sohoToolbar: SohoToolbarComponent;
 
   @Input() set inHeader(param: boolean) {
     this._inHeader = param;

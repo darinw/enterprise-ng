@@ -3,11 +3,11 @@ import { SohoSpinboxComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-spinbox-demo',
-  templateUrl: './spinbox.demo.html'
+  templateUrl: 'spinbox.demo.html'
 })
 
 export class SpinboxDemoComponent {
-  @ViewChild('spinbox') spinbox: SohoSpinboxComponent;
+  @ViewChild('spinbox', { static: true }) spinbox: SohoSpinboxComponent;
 
   public model = { // tslint:disable-line
     value1: '10'

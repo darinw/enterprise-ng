@@ -11,45 +11,45 @@ import { SohoTreemapComponent } from './soho-treemap.component';
 
 const treeData = [{
   data: {
-    'name': 'Storage Utilization (78 GB)',
-    'children': [
+    name: 'Storage Utilization (78 GB)',
+    children: [
       {
-        'name': 'by type',
-        'children': [
+        name: 'by type',
+        children: [
           {
-            'name': 'type1',
-            'children': [
-              {'name': 'JSON', 'value': 3400}
+            name: 'type1',
+            children: [
+              { name: 'JSON', value: 3400 }
             ]
           }, {
-            'name': 'type2',
-            'children': [
-              {'name': 'PDF', 'value': 2200}
+            name: 'type2',
+            children: [
+              { name: 'PDF', value: 2200 }
             ]
           }, {
-            'name': 'type3',
-            'children': [
-              {'name': 'BOD', 'value': 1000}
+            name: 'type3',
+            children: [
+              { name: 'BOD', value: 1000 }
             ]
           }, {
-            'name': 'type4',
-            'children': [
-              {'name': 'TXT', 'value': 1000}
+            name: 'type4',
+            children: [
+              { name: 'TXT', value: 1000 }
             ]
           }, {
-            'name': 'type5',
-            'children': [
-              {'name': 'CSV', 'value': 2000}
+            name: 'type5',
+            children: [
+              { name: 'CSV', value: 2000 }
             ]
           }, {
-            'name': 'type6',
-            'children': [
-              {'name': 'Assets', 'value': 800}
+            name: 'type6',
+            children: [
+              { name: 'Assets', value: 800 }
             ]
           }, {
-            'name': 'type7',
-            'children': [
-              {'name': 'Others', 'value': 1700}
+            name: 'type7',
+            children: [
+              { name: 'Others', value: 1700 }
             ]
           }]
       }]
@@ -57,14 +57,14 @@ const treeData = [{
 }];
 
 describe('Soho Tree Map Unit Tests', () => {
-  let comp:     SohoTreemapComponent;
-  let fixture:  ComponentFixture<SohoTreemapComponent>;
-  let de:       DebugElement;
-  let el:       HTMLElement;
+  let comp: SohoTreemapComponent;
+  let fixture: ComponentFixture<SohoTreemapComponent>;
+  let de: DebugElement;
+  let el: HTMLElement;
 
-  beforeEach( () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ SohoTreemapComponent ]
+      declarations: [SohoTreemapComponent]
     });
 
     fixture = TestBed.createComponent(SohoTreemapComponent);
@@ -108,7 +108,7 @@ describe('Soho Tree Map Unit Tests', () => {
     fixture.detectChanges();
 
     // once bar chart is built setting input should cause bar.settings to update
-    const updatedTreeData = [ ...treeData];
+    const updatedTreeData = [...treeData];
     const updatedMargin = [];
     const updatedColors = [];
     const updatedEmptyMessage: SohoEmptyMessageOptions = {
@@ -149,20 +149,20 @@ describe('Soho Tree Map Unit Tests', () => {
   template: `<div soho-treemap [dataset]="data"></div>`
 })
 class SohoTreemapTestComponent {
-  @ViewChild(SohoTreemapComponent) treemap: SohoTreemapComponent;
+  @ViewChild(SohoTreemapComponent, { static: true }) treemap: SohoTreemapComponent;
   public data = treeData;
 }
 
 describe('Soho Tree Map Render', () => {
   let component: SohoTreemapTestComponent;
-  let fixture:   ComponentFixture<SohoTreemapTestComponent>;
-  let de:        DebugElement;
-  let el:        HTMLElement;
+  let fixture: ComponentFixture<SohoTreemapTestComponent>;
+  let de: DebugElement;
+  let el: HTMLElement;
 
-  beforeEach( () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ SohoTreemapTestComponent ],
-      imports: [ FormsModule, SohoTreemapModule ]
+      declarations: [SohoTreemapTestComponent],
+      imports: [FormsModule, SohoTreemapModule]
     });
 
     fixture = TestBed.createComponent(SohoTreemapTestComponent);

@@ -17,11 +17,11 @@ import { NestedModalDialogComponent } from './nested-modal-dialog.component';
  * numerous times using the SohoContextualActionPanelService.
  */
 @Component({
-  templateUrl: './contextual-action-panel.component.html'
+  templateUrl: 'contextual-action-panel.component.html'
 })
 
 export class ContextualActionPanelComponent {
-  @ViewChild('panelPlaceholder', { read: ViewContainerRef })
+  @ViewChild('panelPlaceholder', { read: ViewContainerRef, static: true })
   placeholder: ViewContainerRef;
   public model = {
     header: 'Default Header Text',

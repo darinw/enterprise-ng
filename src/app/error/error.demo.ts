@@ -13,10 +13,10 @@ import {
  */
 @Component({
   selector: 'app-error-demo',
-  templateUrl: './error.demo.html'
+  templateUrl: 'error.demo.html'
 })
 export class ErrorDemoComponent {
-  @ViewChild(SohoErrorDirective) public error: SohoErrorDirective; // tslint:disable-line
+  @ViewChild(SohoErrorDirective, { static: true }) public error: SohoErrorDirective; // tslint:disable-line
 
   // tslint:disable-next-line:no-unused-variable
   public message = 'Field is required';

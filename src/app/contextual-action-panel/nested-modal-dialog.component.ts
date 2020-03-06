@@ -14,7 +14,7 @@ import {
  * numerous times using the SohoModalDialogService.
  */
 @Component({
-  templateUrl: './nested-modal-dialog.component.html',
+  templateUrl: 'nested-modal-dialog.component.html',
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NestedModalDialogComponent {
@@ -27,7 +27,7 @@ export class NestedModalDialogComponent {
    *
    * This can be the ViewContainerRef of this component, or another component.
    */
-  @ViewChild('dialogPlaceholder', { read: ViewContainerRef })
+  @ViewChild('dialogPlaceholder', { read: ViewContainerRef, static: true })
   placeholder: ViewContainerRef;
 
   /**

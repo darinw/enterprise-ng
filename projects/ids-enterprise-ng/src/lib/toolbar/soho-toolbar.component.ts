@@ -101,7 +101,7 @@ export class SohoToolbarSearchFieldComponent implements AfterViewChecked, AfterV
     private changeDetector: ChangeDetectorRef,
     private element: ElementRef,
     private ngZone: NgZone
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     this.ngZone.runOutsideAngular(() => {
@@ -168,7 +168,7 @@ export class SohoToolbarSearchFieldComponent implements AfterViewChecked, AfterV
 @Component({
   selector: 'soho-toolbar-more-button',
   template: `
-              <button class="btn-actions page-changer" type="button" [attr.disabled]="isDisabled ? 'disabled' : null">
+              <button class="btn-actions" type="button" [attr.disabled]="isDisabled ? 'disabled' : null">
                 <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                   <use xlink:href="#icon-more"></use>
                 </svg>
@@ -186,6 +186,7 @@ export class SohoToolbarSearchFieldComponent implements AfterViewChecked, AfterV
 })
 export class SohoToolbarMoreButtonComponent {
   @HostBinding('class.more') get isMoreButton() { return true; }
+  @Input() @HostBinding('class.page-changer') isPageChanger = false;
   @Input() isDisabled = false;
 }
 
@@ -281,7 +282,7 @@ export class SohoToolbarButtonSetComponent {
  */
 @Component({
   selector: 'soho-toolbar, div[soho-toolbar]',
-  templateUrl: './soho-toolbar.component.html',
+  templateUrl: 'soho-toolbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SohoToolbarComponent implements AfterViewChecked, AfterViewInit, OnDestroy {
@@ -419,7 +420,7 @@ export class SohoToolbarComponent implements AfterViewChecked, AfterViewInit, On
     private changeDetector: ChangeDetectorRef,
     private element: ElementRef,
     private ngZone: NgZone
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     this.ngZone.runOutsideAngular(() => {
@@ -441,7 +442,7 @@ export class SohoToolbarComponent implements AfterViewChecked, AfterViewInit, On
         this.ngZone.run(() => this.afterActivated.emit(event)));
 
       this.jQueryElement.on('selected', (event: JQuery.TriggeredEvent, item: HTMLButtonElement | HTMLAnchorElement) =>
-        this.ngZone.run(() => this.selected.emit({event, item})));
+        this.ngZone.run(() => this.selected.emit({ event, item })));
 
       // Returns original button info on mouseover event
       this.jQueryElement.find('.more').on('mouseover', 'li.submenu', ((event: JQuery.TriggeredEvent) => {
@@ -466,6 +467,7 @@ export class SohoToolbarComponent implements AfterViewChecked, AfterViewInit, On
     // call outside the angular zone so change detection isn't triggered by the soho component.
     this.ngZone.runOutsideAngular(() => {
       if (this.jQueryElement) {
+        this.jQueryElement.find('.more').off();
         this.jQueryElement.off();
       }
       if (this.toolbar) {

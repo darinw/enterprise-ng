@@ -15,7 +15,7 @@ import { DataGridCustomFormatterService } from './datagrid-custom-formatter.serv
 
 @Component({
   selector: 'app-datagrid-custom-formatter-service-demo',
-  templateUrl: './datagrid-custom-formatter-service.demo.html',
+  templateUrl: 'datagrid-custom-formatter-service.demo.html',
   providers: [ DataGridCustomFormatterService ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -147,10 +147,21 @@ export class SohoColumnComponent implements AfterViewInit, AfterViewChecked, OnD
     }
   }
 
+  /** Settings for the chart tooltip. */
+  @Input() set tooltip(tooltip: string | SohoColumnTooltipFunction) {
+    this.options.tooltip = tooltip;
+
+    if (this.column) {
+      this.column.settings.tooltip = tooltip;
+      this.updateRequired = true;
+    }
+  }
+
   /** Events */
   @Output() selected: EventEmitter<SohoColumnSelectEvent> = new EventEmitter<SohoColumnSelectEvent>();
   @Output() unselected: EventEmitter<SohoColumnSelectEvent> = new EventEmitter<SohoColumnSelectEvent>();
   @Output() rendered: EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() contextmenu: EventEmitter<Object> = new EventEmitter<Object[]>();
 
   private jQueryElement: JQuery;
   public column: SohoColumn;
@@ -176,6 +187,8 @@ export class SohoColumnComponent implements AfterViewInit, AfterViewChecked, OnD
         this.ngZone.run(() => this.unselected.emit(args)));
       this.jQueryElement.on('rendered', (...args) =>
         this.ngZone.run(() => this.rendered.emit(args)));
+      this.jQueryElement.on('contextmenu', (...args) =>
+        this.ngZone.run(() => this.contextmenu.emit(args)));
     });
   }
 

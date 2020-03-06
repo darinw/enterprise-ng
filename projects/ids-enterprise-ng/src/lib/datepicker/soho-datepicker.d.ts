@@ -10,6 +10,7 @@ type SohoDatePickerMode = 'standard' | 'range';
 type SohoDatePickerCalendarName = 'gregorian' | 'islamic-umalqura';
 
 type SohoDatePickerDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
 /**
  * Date Picker Options
  */
@@ -50,11 +51,14 @@ interface SohoDatePickerOptions {
   /** If true the month and year will render as dropdowns. */
   showMonthYearPicker?: boolean;
 
-  /** If true the days portion of the calendar will be hidden. */
+  /** The number of years ahead to show in the month/year picker should total 9 with yearsBack. */
   hideDays?: boolean;
 
-  /** The number of months in each direction to show in the dropdown for months (when initially opening) */
-  advanceMonths?: number;
+  /** If true the days portion of the calendar will be hidden. */
+  yearsAhead?: number;
+
+  /** The number of years back to show in the month/year picker should total 9 with yearsAhead. */
+  yearsBack?: number;
 
   /** The number of months in each direction to show in the dropdown for months (when initially opening) */
   legend?: Array<SohoDatePickerLegend>;
@@ -65,12 +69,21 @@ interface SohoDatePickerOptions {
   /** Calendar name. */
   calendarName?:  SohoDatePickerCalendarName;
 
+  /** The name of the locale to use for this instance. If not set, the current locale will be used. */
+  locale?: string;
+
   /** If true the dates will use UTC format. This is only partially
    * implemented https://jira.infor.com/browse/SOHO-3437 */
   useUTC?: boolean;
 
   /** Set first day of the week. '1' would be Monday. */
   firstDayOfWeek?: SohoDatePickerDayOfWeek;
+
+  /** If true the field will be sized to the width of the date. */
+  autoSize?: boolean;
+
+  /** Show the today button on the header. */
+  showToday?: boolean;
 }
 
 /* Options for the legend */

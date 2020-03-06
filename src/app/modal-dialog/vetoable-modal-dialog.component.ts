@@ -12,7 +12,7 @@ import {
  * numerous times using the SohoModalDialogService.
  */
 @Component({
-  templateUrl: './vetoable-modal-dialog.component.html',
+  templateUrl: 'vetoable-modal-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VetoableModalDialogComponent implements SohoModalDialogVetoableEventGuard<VetoableModalDialogComponent> {
@@ -23,7 +23,7 @@ export class VetoableModalDialogComponent implements SohoModalDialogVetoableEven
   /**
    * Constructor, taking the interface to the Soho Modal Dialog Api.
    */
-  constructor(private dialogRef: SohoModalDialogRef<VetoableModalDialogComponent>) {
+  constructor() {
   }
 
   beforeOpen(): boolean {

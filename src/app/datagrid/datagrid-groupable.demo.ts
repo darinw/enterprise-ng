@@ -13,12 +13,12 @@ import { DataGridDemoService } from './datagrid-demo.service';
 
 @Component({
   selector: 'app-datagrid-groupable-demo',
-  templateUrl: './datagrid-groupable.demo.html',
+  templateUrl: 'datagrid-groupable.demo.html',
   providers: [ { provide: SohoDataGridService, useClass: DataGridDemoService } ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataGridGroupableDemoComponent implements OnInit {
-  @ViewChild(SohoDataGridComponent) dataGrid: SohoDataGridComponent;
+  @ViewChild(SohoDataGridComponent, { static: true }) dataGrid: SohoDataGridComponent;
 
   private _groupColumn: string;
 

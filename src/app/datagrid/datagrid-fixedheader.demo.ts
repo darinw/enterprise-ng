@@ -11,7 +11,7 @@ import { DataGridPagingIndeterminateDemoService } from './datagrid-paging-indete
 
 @Component({
   selector: 'app-datagrid-fixed-header-demo',
-  templateUrl: './datagrid-fixedheader.demo.html',
+  templateUrl: 'datagrid-fixedheader.demo.html',
   providers: [ DataGridPagingIndeterminateDemoService ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

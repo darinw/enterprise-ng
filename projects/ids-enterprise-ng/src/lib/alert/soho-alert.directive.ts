@@ -36,6 +36,12 @@ export class SohoAlertDirective implements AfterViewInit {
     }
   }
 
+  /** Set id with the SohoAlertType. */
+  @Input()
+  public set id(id: string) {
+    this._options.id = id;
+  }
+
   /** Set message with the SohoAlertType. */
   @Input()
   public set type(type: SohoAlertType) {
@@ -156,7 +162,7 @@ export class SohoAlertDirective implements AfterViewInit {
   removeAllMessages(triggerEvents?: boolean) {
     this.removeMessage('error', triggerEvents);
     this.removeMessage('alert', triggerEvents);
-    this.removeMessage('confirm', triggerEvents);
+    this.removeMessage('success', triggerEvents);
     this.removeMessage('info', triggerEvents);
     this.removeMessage('icon', triggerEvents);
   }

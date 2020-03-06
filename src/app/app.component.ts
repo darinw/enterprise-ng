@@ -15,7 +15,7 @@ import {
 
 @Component({
   selector: 'body', // tslint:disable-line
-  templateUrl: './app.component.html',
+  templateUrl: 'app.component.html',
   styleUrls: [ './app.component.css' ],
   providers: [ HeaderDynamicDemoRefService ],
   encapsulation: ViewEncapsulation.None
@@ -26,10 +26,10 @@ export class AppComponent implements AfterViewInit {
    */
   private static IS_APPLICATION_MENU_OPEN_KEY = 'is-application-menu-open';
 
-  @ViewChild(SohoApplicationMenuComponent)
+  @ViewChild(SohoApplicationMenuComponent, { static: true })
   public applicationMenu: SohoApplicationMenuComponent;
 
-  @ViewChild(SohoPersonalizeDirective) personalize: SohoPersonalizeDirective;
+  @ViewChild(SohoPersonalizeDirective, { static: true }) personalize: SohoPersonalizeDirective;
 
   @HostBinding('class.no-scroll') get isNoScroll() { return true; }
 
@@ -73,8 +73,10 @@ export class AppComponent implements AfterViewInit {
     localStorage.setItem(AppComponent.IS_APPLICATION_MENU_OPEN_KEY, open ? 'true' : 'false');
   }
 
-  onChangeTheme(ev: SohoChangeThemePersonalizeEvent) {
-    this.useUpliftIcons = ev.theme === 'uplift';
+  onChangeTheme(ev: SohoPersonalizeEvent) {
+    this.useUpliftIcons = ev.data.theme === 'theme-uplift-light'
+      || ev.data.theme === 'theme-uplift-dark'
+      || ev.data.theme === 'theme-uplift-contrast';
   }
 
   public onMenuVisibility(visible: boolean): void {

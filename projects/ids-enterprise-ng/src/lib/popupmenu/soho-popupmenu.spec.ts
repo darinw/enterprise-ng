@@ -151,12 +151,12 @@ describe('Soho Popup Menu Item Render', () => {
 
     fixture = TestBed.createComponent(SohoPopupMenuItemTestComponent);
     component = fixture.componentInstance;
-    item = component.item;
 
     de = fixture.debugElement;
     el = de.query(By.css('li[soho-popupmenu-item]')).nativeElement;
 
     fixture.detectChanges();
+    item = component.item;
   });
 
   it('Check Item HTML content', () => {
@@ -189,12 +189,12 @@ describe('Soho Popup Menu Item Label Render', () => {
 
     fixture = TestBed.createComponent(SohoPopupMenuItemLabelTestComponent);
     component = fixture.componentInstance;
+
+    fixture.detectChanges();
     label = component.label;
 
     de = fixture.debugElement;
     el = de.query(By.css('a[soho-popupmenu-label]')).nativeElement;
-
-    fixture.detectChanges();
   });
 
   it('Check Item HTML content', () => {

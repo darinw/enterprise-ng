@@ -12,7 +12,7 @@ import {
 
 @Component({
   selector: 'app-busyindicator-demo',
-  templateUrl: './form.demo.html',
+  templateUrl: 'form.demo.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BusyIndicatorDemoComponent {
@@ -23,7 +23,7 @@ export class BusyIndicatorDemoComponent {
 
   transparentOverlay = false;
 
-  @ViewChild(SohoBusyIndicatorDirective) busyIndicator: SohoBusyIndicatorDirective;
+  @ViewChild(SohoBusyIndicatorDirective, { static: true }) busyIndicator: SohoBusyIndicatorDirective;
 
   constructor(private elementRef: ElementRef) {
   }

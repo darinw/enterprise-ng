@@ -10,7 +10,7 @@ import {
   Output,
   HostListener,
   HostBinding,
-  Input
+  Input, NgZone
 } from '@angular/core';
 
 import {
@@ -25,6 +25,12 @@ import {
   providers: [ provideControlValueAccessor(SohoInputComponent) ]
 })
 export class SohoInputComponent extends BaseControlValueAccessor<string> implements AfterViewInit, OnDestroy {
+
+  /**
+   * todo: work around until landmark can change code to allow the initial format.
+   * Right now landmark initially formats the value to current locale.
+   */
+  @Input() fireInputEventKludge = true;
 
   /**
    * Available Soho Template events as Output (EventEmitters passing the event)
@@ -53,7 +59,10 @@ export class SohoInputComponent extends BaseControlValueAccessor<string> impleme
    * @param element the owning element.
    * @param changeDetectionRef change detection.
    */
-  constructor(private element: ElementRef) {
+  constructor(
+    private element: ElementRef,
+    private ngZone: NgZone
+  ) {
     super();
   }
 
@@ -112,10 +121,19 @@ export class SohoInputComponent extends BaseControlValueAccessor<string> impleme
       // The processing is required to ensure we use the correct format
       // in the control.
       this.jQueryElement.val(value);
+
+      if (this.fireInputEventKludge) {
+        this.ngZone.runOutsideAngular(
+          () => {
+            setTimeout(() => {
+              this.element.nativeElement.dispatchEvent(new Event('input'));
+            });
+          });
+      }
     }
   }
 
-   /**
+ /**
    * This function is called when the control status changes to or from "DISABLED".
    * Depending on the value, it will enable or disable the appropriate DOM element.
    */

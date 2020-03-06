@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({ // @tslint:disable-line
   selector: 'app-pager-standalone-demo',
-  templateUrl: './pager-standalone.demo.html',
+  templateUrl: 'pager-standalone.demo.html',
 })
 export class PagerStandaloneDemoComponent {
 
@@ -23,6 +23,9 @@ export class PagerStandaloneDemoComponent {
     nextPageTooltip    : 'click to got to the last page of records',
 
     hidePageSizeSelector: false,
+    useSmallPageSizeSelector: false,
+    pageSizeMenuSettings: {attachToBody: false},
+
     pageSize: 10,
     pageSizes: [5, 10, 15, 20],
   };

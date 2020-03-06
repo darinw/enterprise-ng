@@ -83,8 +83,8 @@ export class SohoAngularEditorAdapter implements ExtendedSohoDataGridCellEditor 
     // @todo talk to Tim about removing this requirement.
     this.input = $(this.componentRef.location.nativeElement).find('input:first');
     this.className = this.componentRef.instance
-        && this.componentRef.instance.className
-        ? this.componentRef.instance.className : '.editor';
+      && this.componentRef.instance.className
+      ? this.componentRef.instance.className : '.editor';
   }
 
   val(value?: any): any {
@@ -436,6 +436,28 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
     return this._gridOptions.editable;
   }
 
+  /**
+   * Input that defines a function which is used to determine if a row is disabled, or not.
+   */
+  @Input() set isRowDisabled(isRowDisabled: SohoIsRowDisabledFunction) {
+    this._gridOptions.isRowDisabled = isRowDisabled;
+    if (this.datagrid) {
+      this.datagrid.settings.isRowDisabled = isRowDisabled;
+      this.markForRefresh('isRowDisabled', RefreshHintFlags.RenderRows);
+    }
+  }
+
+  get isRowDisabled(): SohoIsRowDisabledFunction {
+    if (this.datagrid) {
+      return this.datagrid.settings.isRowDisabled;
+    }
+
+    // ... we've been called before the component has completed
+    // initialisation, so return the current value from the
+    // options.
+    return this._gridOptions.isRowDisabled;
+  }
+
   @Input() set isList(isList: boolean) {
     this._gridOptions.isList = isList;
     if (this.jQueryElement) {
@@ -483,6 +505,19 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
   }
 
   /**
+   * Sets the height of the row to something other then the three built in rowHeights.
+   *
+   * @param fixedRowHeight Any integer
+   */
+  @Input() set fixedRowHeight(fixedRowHeight: number) {
+    this._gridOptions.fixedRowHeight = fixedRowHeight;
+    if (this.jQueryElement) {
+      this.datagrid.settings.fixedRowHeight = fixedRowHeight;
+      this.markForRefresh('fixedRowHeight', RefreshHintFlags.Rebuild);
+    }
+  }
+
+  /**
    * Whether selection is enabled.
    *
    * @param selectable valid values are: 'multiple', 'single', 'mixed', 'siblings' and false.
@@ -494,6 +529,19 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
       this.datagrid.settings.selectable = selectable;
       this.markForRefresh('selectable', RefreshHintFlags.RenderRows);
     }
+  }
+
+  @Input() set showSelectAllCheckBox(showSelectAllCheckBox: boolean) {
+    this._gridOptions.showSelectAllCheckBox = showSelectAllCheckBox;
+    if (this.jQueryElement) {
+      // Just changing the datagrid.settings.selectable updates the datagrid view.
+      this.datagrid.settings.showSelectAllCheckBox = showSelectAllCheckBox;
+      this.markForRefresh('showSelectAllCheckBox', RefreshHintFlags.Rebuild);
+    }
+  }
+
+  get showSelectAllCheckBox() {
+    return this._gridOptions.showSelectAllCheckBox;
   }
 
   get selectable(): any {
@@ -960,11 +1008,27 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
   /**
    * The name of the column to stretch, or 'last' if the
    * last column is stretched.
-   *
-   *
    */
   get stretchColumn() {
     return this._gridOptions.stretchColumn;
+  }
+
+  /**
+   * If true, column will recalculate its width and stretch if required on column change.
+   * @param stretchColumnOnChange - If false stretch logic wont run on column change.
+   */
+  @Input() set stretchColumnOnChange(stretchColumnOnChange: boolean) {
+    this._gridOptions.stretchColumnOnChange = stretchColumnOnChange;
+    if (this.jQueryElement) {
+      this.datagrid.settings.stretchColumnOnChange = stretchColumnOnChange;
+      this.markForRefresh('stretchColumnOnChange', RefreshHintFlags.Rebuild);
+    }
+  }
+  /**
+   * The current value of stretchColumnOnChange.
+   */
+  get stretchColumnOnChange() {
+    return this._gridOptions.stretchColumnOnChange;
   }
 
   /**
@@ -1021,6 +1085,22 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
   }
 
   /**
+   * Enable toolips on the cell values, at a cost of performance.
+   */
+  @Input() set enableTooltips(value: boolean) {
+    this._gridOptions.enableTooltips = value;
+    if (this.jQueryElement) {
+      this.datagrid.settings.enableTooltips = value;
+
+      this.markForRefresh('enableTooltips', RefreshHintFlags.Rebuild);
+    }
+  }
+
+  get enableTooltips(): boolean {
+    return this._gridOptions.enableTooltips;
+  }
+
+  /**
    * Defines the source type of the grid, either:
    *
    * - "content-only" where table elements are provided in the body.
@@ -1058,6 +1138,10 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
   // This event is fired when a row in the grid is expanded.
   @Output()
   expandrow = new EventEmitter<SohoDataGridToggleRowEvent>();
+
+  // This event is fired when a key is pressed
+  @Output()
+  keydown = new EventEmitter<SohoDataGridKeyDownEvent>();
 
   // This event is fired when edit mode is exited.
   @Output()
@@ -1153,7 +1237,8 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
   // An internal gridOptions object that gets updated by using
   // the component's Inputs()
   private _gridOptions: SohoDataGridOptions = {
-    stretchColumn: 'last' // default value
+    stretchColumn: 'last',
+    enableTooltips: false
   };
 
   // Provides hints to the component after the next refresh.
@@ -1310,6 +1395,10 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
     });
   }
 
+  /**
+   * Removes a row matching the data passed in from the data and grid.
+   * @param data the row of data to remove
+   */
   removeRow(data: any) {
     this.ngZone.runOutsideAngular(() => {
       this.datagrid.removeRow(data);
@@ -1344,6 +1433,15 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
   clearDirty(): void {
     return this.ngZone.runOutsideAngular(() => {
       this.datagrid.clearDirty();
+    });
+  }
+
+  /**
+   * Commit the cell that's currently in edit mode.
+   */
+  commitCellEdit(): void {
+    return this.ngZone.runOutsideAngular(() => {
+      this.datagrid.commitCellEdit();
     });
   }
 
@@ -1402,6 +1500,23 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
     this.ngZone.runOutsideAngular(() => this.datagrid.clearAllErrors());
   }
 
+  /** Validate all rows and cells in the entire grid if they have validation on the column */
+  showRowError(row: number, message: string, type: SohoAlertType): void {
+    this.ngZone.runOutsideAngular(() => this.datagrid.showRowError(row, message, type));
+  }
+
+  /** Validate all cells in a specific row */
+  validateRow(row: number): void {
+    this.ngZone.runOutsideAngular(() => this.datagrid.validateRow(row));
+  }
+
+  /**
+   * Set and show a message/error on the given row.
+   */
+  validateAll(): void {
+    this.ngZone.runOutsideAngular(() => this.datagrid.validateAll());
+  }
+
   /**
    * Sets the status of a given row in the grid.
    *
@@ -1412,6 +1527,29 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
   rowStatus(idx: number, status: string, tooltip: string): void {
     return this.ngZone.runOutsideAngular(() => {
       this.datagrid.rowStatus(idx, status, tooltip);
+    });
+  }
+
+  /**
+   * Return an array containing all of the currently modified rows, the type of modification
+   * and the cells that are dirty and the data.
+   * @returns An keyed object showing the dirty row info.
+   */
+  getModifiedRows(): SohoDataGridModifiedRows {
+    return this.ngZone.runOutsideAngular(() => {
+      return this.datagrid.getModifiedRows();
+    });
+  }
+
+  /**
+   * Set a cell to dirty and add the dirty icon visually.
+   * @param row The row index
+   * @param cell The cell index
+   * @param toggle True to set it and false to remove it
+   */
+  setDirtyIndicator(row: number, cell: number, toggle: boolean): void {
+    this.ngZone.runOutsideAngular(() => {
+      this.datagrid.setDirtyIndicator(row, cell, toggle);
     });
   }
 
@@ -1556,6 +1694,31 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
   }
 
   /**
+   * Set the status of the checkbox on the header.
+   *
+   * @param state 'all', 'partial' or 'all'.
+   */
+  public setHeaderCheckboxState(state: SohoDataGridHeaderCheckboxState) {
+    const headerCheckbox = this.jQueryElement.find('.datagrid-header').find('.datagrid-checkbox');
+    if (headerCheckbox) {
+      if (state === 'partial') {
+        headerCheckbox.data('selected', 'partial')
+          .addClass('is-checked is-partial');
+      }
+
+      if (state === 'all') {
+        headerCheckbox.data('selected', 'all')
+          .addClass('is-checked').removeClass('is-partial');
+      }
+
+      if (state === 'none') {
+        headerCheckbox.data('selected', 'none')
+          .removeClass('is-checked is-partial');
+      }
+    }
+  }
+
+  /**
    * Activate the row of the passed-in idx.
    * NOTE: valid only when selection mode is 'mixed'
    */
@@ -1633,9 +1796,9 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
    * Trigger export of grid data to Excel.
    * @param fileName The prefix name to be used for the exported file.
    * @param worksheetName The name to be used for the worksheet.
-   * @param customDs A datasource to override the default.
+   * @param customDs A datasource to override the default (deprecated)
    */
-  exportToExcel(fileName: string, worksheetName: string, customDs: Object[]): void {
+  exportToExcel(fileName: string, worksheetName?: string, customDs?: Object[]): void {
     this.ngZone.runOutsideAngular(() => {
       this.datagrid.exportToExcel(fileName, worksheetName, customDs);
     });
@@ -1647,7 +1810,7 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
    * @param customDs A datasource to override the default.
    * @param separator The separator to use in the cvs file, defaults to 'sep=,'
    */
-  exportToCsv(fileName: string, customDs: Object[], separator: string = 'sep=,'): void {
+  exportToCsv(fileName: string, customDs?: Object[], separator: string = 'sep=,'): void {
     this.ngZone.runOutsideAngular(() => {
       this.datagrid.exportToCsv(fileName, customDs, separator);
     });
@@ -1732,6 +1895,35 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
     this.ngZone.run(() => {
       this.expandrow.next(event);
     });
+  }
+
+  /**
+   * Event fired after a key is pressed
+   */
+  private onKeyDown(e: JQuery.Event, args: SohoDataGridKeyDownArgs, response: Function) {
+    const event = { e, args, response };
+    this.ngZone.run(() => {
+      this.keydown.next(event);
+    });
+  }
+
+  /**
+   * Event fired after a child row has been expanded.
+   * @param idProperty string id
+   */
+  @Input() set onBeforeSelect(beforeSelectFunction: SohoDataGridBeforeSelectFunction) {
+    this._gridOptions.onBeforeSelect = beforeSelectFunction;
+    if (this.datagrid) {
+      this.datagrid.settings.onBeforeSelect = beforeSelectFunction;
+      this.markForRefresh('onBeforeSelect', RefreshHintFlags.Rebuild);
+    }
+  }
+
+  get onBeforeSelect(): SohoDataGridBeforeSelectFunction {
+    if (this.datagrid) {
+      return this.datagrid.settings.onBeforeSelect;
+    }
+    return this._gridOptions.onBeforeSelect;
   }
 
   /**
@@ -1913,7 +2105,7 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
   }
 
   /**
-   * Event fired when a row is selected.
+   * Event fired when a row is selected or deselected.
    */
   private onSelected(args: SohoDataGridSelectedEvent) {
     this.ngZone.run(() => {
@@ -2044,7 +2236,7 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
     // Create an injector that will provide the arguments for the
     // component.
     // const injector = ReflectiveInjector.resolveAndCreate([{ provide: 'args', useValue: args }], this.injector);
-    const injector = Injector.create({ providers: [{ provide: 'args', useValue: args }], parent: this.injector});
+    const injector = Injector.create({ providers: [{ provide: 'args', useValue: args }], parent: this.injector });
 
     // Create the component, in the container.
     const component = factory.create(injector, [], container);
@@ -2142,6 +2334,11 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
         this.onEditCell(editor);
       };
 
+      // Add the keydown callback.
+      this._gridOptions.onKeyDown = (e: JQuery.Event, args: SohoDataGridKeyDownArgs, response: Function) => {
+        this.onKeyDown(e, args, response);
+      };
+
       // Initialise any event handlers.
       this.jQueryElement
         .on('addrow', (e: any, args: SohoDataGridAddRowEvent) => { this.onRowAdd(args); })
@@ -2164,18 +2361,21 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
         .on('rowactivated', (e: any, args: SohoDataGridRowActivatedEvent) => { this.onRowActivated(args); })
         .on('rowdeactivated', (e: any, args: SohoDataGridRowDeactivatedEvent) => { this.onRowDeactivated(args); })
         .on('rowreorder', (e: any, args: SohoDataGridRowReorderedEvent) => { this.onRowReordered(args); })
-        .on('selected', (e: any, args: SohoDataGridSelectedRow[]) => this.onSelected({ e, rows: args }))
+        .on('selected',
+          (e: any,
+            args: SohoDataGridSelectedRow[],
+            type?: SohoDataGridSelectedEventType) => this.onSelected({ e, rows: args, type }))
         .on('settingschanged', (e: any, args: SohoDataGridSettingsChangedEvent) => { this.onSettingsChanged(args); })
         .on('sorted', (e: any, args: SohoDataGridSortedEvent) => { this.onSorted(args); });
-      });
+    });
 
-      // Initialise the SohoXi control.
-      this.jQueryElement.datagrid(this._gridOptions);
+    // Initialise the SohoXi control.
+    this.jQueryElement.datagrid(this._gridOptions);
 
-      // Once the control is initialised, extract the control
-      // plug-in from the element.  The element name is
-      // defined by the plug-in, but in this case is 'datagrid'.
-      this.datagrid = this.jQueryElement.data('datagrid');
+    // Once the control is initialised, extract the control
+    // plug-in from the element.  The element name is
+    // defined by the plug-in, but in this case is 'datagrid'.
+    this.datagrid = this.jQueryElement.data('datagrid');
 
     // If "auto" and there's a service, get the columns from it.
     // (may want to check if columns have already been set? Error?)
@@ -2274,7 +2474,10 @@ export class SohoDataGridComponent implements OnInit, AfterViewInit, OnDestroy, 
     // Add an adapter for all the columns using an component as an editor.
     this._gridOptions.columns.forEach((c) => {
       if (c.editorComponent) {
-        c.editor = (row?: any, cell?: any, value?: any, container?: JQuery, col?: SohoDataGridColumn, e?: any, api?: any, item?: any) => {
+        // Use a `function expression` rather than an `arrow function` as the editor is used
+        // as constructor.
+        // tslint:disable-next-line: max-line-length
+        c.editor = function (row?: any, cell?: any, value?: any, container?: JQuery, col?: SohoDataGridColumn, e?: any, api?: any, item?: any) {
           return new SohoAngularEditorAdapter(c.editorComponent, { row, cell, value, container: container[0], col, e, api, item });
         };
       }
@@ -2289,4 +2492,14 @@ export interface SohoDataGridToggleRowEvent extends SohoDataGridRowExpandEvent {
   // The data grid component originating the call.
   grid: SohoDataGridComponent;
   args?: any;
+}
+
+/**
+ * Details of the 'keydown' event
+ */
+export interface SohoDataGridKeyDownEvent {
+  // The data grid component originating the call.
+  e: JQuery.Event;
+  args?: SohoDataGridKeyDownArgs;
+  response?: Function;
 }

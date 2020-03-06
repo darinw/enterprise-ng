@@ -15,12 +15,12 @@ import {
 
 @Component({
   selector: 'app-datagrid-test-settings-demo',
-  templateUrl: './datagrid-test-settings.demo.html',
+  templateUrl: 'datagrid-test-settings.demo.html',
   providers: [ { provide: SohoDataGridService, useClass: DataGridDemoService } ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataGridTestSettingsDemoComponent {
-  @ViewChild(SohoDataGridComponent) datagrid: SohoDataGridComponent;
+  @ViewChild(SohoDataGridComponent, { static: true }) datagrid: SohoDataGridComponent;
 
   constructor(private readonly gridService: SohoDataGridService) {
   }

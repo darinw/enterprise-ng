@@ -7,11 +7,11 @@ import { SohoBarComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-bar-demo',
-  templateUrl: './bar.demo.html',
+  templateUrl: 'bar.demo.html',
 })
 export class BarDemoComponent implements OnInit {
 
-  @ViewChild(SohoBarComponent) sohoBarComponent: SohoBarComponent;
+  @ViewChild(SohoBarComponent, { static: true }) sohoBarComponent: SohoBarComponent;
 
   // The following multiple "private selection" definitions are all examples of ways to set the selection on the chart
   private selection: SohoBarSelected  = {fieldName: 'name', fieldValue: 'Category B'};
@@ -45,5 +45,13 @@ export class BarDemoComponent implements OnInit {
   toggleChartSelection () {
     const SohoBarSelected: SohoBarSelected = this.selection;
     this.sohoBarComponent.toggleSelected(SohoBarSelected);
+  }
+
+  onRendered(e) {
+    console.log('onRendered', e);
+  }
+
+  onContextMenu(args) {
+    console.log('onContextMenu', args);
   }
 }

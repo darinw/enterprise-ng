@@ -1,7 +1,7 @@
 /// <reference path="soho-datepicker.d.ts" />
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import {Component, DebugElement, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SohoDatePickerModule, SohoDatePickerComponent } from './index';
@@ -21,13 +21,15 @@ import { SohoDatePickerModule, SohoDatePickerComponent } from './index';
       [placeholder]="_placeholder"
       [showLegend]="_showLegend"
       [showMonthYearPicker]="_showMonthYearPicker"
-      [advanceMonths]="_advanceMonths"
       [legend]="_legend"
+      [locale]="_locale"
       [calendarName]="_calendarName"
       [mode]="_mode"
       [range]="_range"
       [disable]="_disable"
       [hideDays]="_hideDays"
+      [yearsAhead]="_yearsAhead"
+      [yearsBack]="_yearsBack"
       [useUTC]="_useUTC"
       [(ngModel)]="model"
       (change)="onChange($event)"/>
@@ -98,6 +100,22 @@ class TestDatePickerComponent {
     }
   }
 
+  public _showToday: boolean;
+  @Input() set showToday(showToday: boolean) {
+    this._showToday = showToday;
+    if (this.datepicker) {
+      this.datepicker.showToday = this._showToday;
+    }
+  }
+
+  public _autoSize: boolean;
+  @Input() set autoSize(autoSize: boolean) {
+    this._autoSize = autoSize;
+    if (this.datepicker) {
+      this.datepicker.autoSize = this._autoSize;
+    }
+  }
+
   public _roundToInterval: boolean;
   @Input() set roundToInterval(roundToInterval: boolean) {
     this._roundToInterval = roundToInterval;
@@ -138,94 +156,107 @@ class TestDatePickerComponent {
     }
   }
 
-  public _advanceMonths: number;
-  @Input() set advanceMonths(advanceMonths: number) {
-    this._advanceMonths = advanceMonths;
-    if (this.datepicker) {
-      this.datepicker.advanceMonths = this._advanceMonths;
-    }
-  }
-
   public _legend: Array<SohoDatePickerLegend>;
-  @Input() set legend(legend:  Array<SohoDatePickerLegend>) {
+  @Input() set legend(legend: Array<SohoDatePickerLegend>) {
     this._legend = legend;
     if (this.datepicker) {
       this.datepicker.legend = this._legend;
     }
   }
 
-  public _calendarName:  SohoDatePickerCalendarName;
-  @Input() set calendarName(calendarName:  SohoDatePickerCalendarName) {
+  public _locale: string;
+  @Input() set locale(locale: string) {
+    this._locale = locale;
+    if (this.datepicker) {
+      this.datepicker.locale = this._locale;
+    }
+  }
+
+  public _calendarName: SohoDatePickerCalendarName;
+  @Input() set calendarName(calendarName: SohoDatePickerCalendarName) {
     this._calendarName = calendarName;
     if (this.datepicker) {
       this.datepicker.calendarName = this._calendarName;
     }
   }
 
-  public _mode:  SohoDatePickerMode;
-  @Input() set mode(mode:  SohoDatePickerMode) {
+  public _mode: SohoDatePickerMode;
+  @Input() set mode(mode: SohoDatePickerMode) {
     this._mode = mode;
     if (this.datepicker) {
       this.datepicker.mode = this._mode;
     }
   }
 
-  public _range:  SohoDatePickerRange;
-  @Input() set range(range:  SohoDatePickerRange) {
+  public _range: SohoDatePickerRange;
+  @Input() set range(range: SohoDatePickerRange) {
     this._range = range;
     if (this.datepicker) {
       this.datepicker.range = this._range;
     }
   }
 
-  public _disable:  SohoDatePickerDisable;
-  @Input() set disable(disable:  SohoDatePickerDisable) {
+  public _disable: SohoDatePickerDisable;
+  @Input() set disable(disable: SohoDatePickerDisable) {
     this._disable = disable;
     if (this.datepicker) {
       this.datepicker.disable = this._disable;
     }
   }
 
-  public _hideDays:  boolean;
-  @Input() set hideDays(hideDays:  boolean) {
+  public _hideDays: boolean;
+  @Input() set hideDays(hideDays: boolean) {
     this._hideDays = hideDays;
     if (this.datepicker) {
       this.datepicker.hideDays = this._hideDays;
     }
   }
-  public _useUTC:  boolean;
-  @Input() set useUTC(useUTC:  boolean) {
+
+  public _yearsAhead: number;
+  @Input() set yearsAhead(yearsAhead: number) {
+    this._yearsAhead = yearsAhead;
+    if (this.datepicker) {
+      this.datepicker.yearsAhead = this._yearsAhead;
+    }
+  }
+
+  public _yearsBack: number;
+  @Input() set yearsBack(yearsBack: number) {
+    this._yearsBack = yearsBack;
+    if (this.datepicker) {
+      this.datepicker.yearsBack = this._yearsBack;
+    }
+  }
+
+  public _useUTC: boolean;
+  @Input() set useUTC(useUTC: boolean) {
     this._useUTC = useUTC;
     if (this.datepicker) {
       this.datepicker.useUTC = this._useUTC;
     }
   }
 
-  onChange(value) {
+  onChange(value: any) {
     this.changed.emit(value);
   }
 }
 
 describe('Soho Datepicker Unit Tests', () => {
-  let comp:     TestDatePickerComponent;
-  let fixture:  ComponentFixture<TestDatePickerComponent>;
-  let de:       DebugElement;
-  let el:       HTMLInputElement;
+  let comp: TestDatePickerComponent;
+  let fixture: ComponentFixture<TestDatePickerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TestDatePickerComponent ],
-      imports: [ FormsModule, ReactiveFormsModule, SohoDatePickerModule ]
+      declarations: [TestDatePickerComponent],
+      imports: [FormsModule, ReactiveFormsModule, SohoDatePickerModule]
     });
 
     fixture = TestBed.createComponent(TestDatePickerComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
 
-    de = fixture.debugElement;
-    el = de.nativeElement;
     Soho.Locale.set('en-US').done(() => {
-
+      // We ought to wait!
     });
   }));
 
@@ -233,18 +264,21 @@ describe('Soho Datepicker Unit Tests', () => {
 
     spyOn(comp, 'onChange');
 
-    const date = new Date('1978-11-18T12:00:00Z');
+    const date = new Date('1978-11-11T12:00:00Z');
 
     // comp.changed.map((x: SohoDatePickerEvent) => x.data).subscribe((x) => {
     //   expect(x).toBe(date, 'Incorrect value passed to event');
     // });
-
+    expect(Soho.Locale.currentLocale.name).toEqual('en-US');
     comp.datepicker.setValue(date);
+
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
-        expect(comp.onChange).toHaveBeenCalled();
-        expect(comp.model).toBe('11/18/1978', 'Model not updated to correct value.');
+      fixture.detectChanges();
+      expect(Soho.Locale.currentLocale.name).toEqual('en-US');
+      expect(comp.onChange).toHaveBeenCalled();
+      expect(comp.model).toBe('11/11/1978', 'Model not updated to correct value.');
     });
   }));
 
@@ -258,14 +292,14 @@ describe('Soho Datepicker Unit Tests', () => {
       minuteInterval: 10,
       secondInterval: 10,
       firstDayOfWeek: 0,
+      showToday: true,
       roundToInterval: true,
       dateFormat: 'mm/dd/yyyy',
       placeholder: 'placeholder',
       showLegend: true,
       showMonthYearPicker: true,
-      advanceMonths: 3,
-      legend: [{name: 'Weekends', color: '#EFA836', dayOfWeek: [0, 6]}],
-      calendarName:  'gregorian'
+      legend: [{ name: 'Weekends', color: '#EFA836', dayOfWeek: [0, 6] }],
+      calendarName: 'gregorian'
     };
 
     const testOptionsTwo: SohoDatePickerOptions = {
@@ -280,9 +314,9 @@ describe('Soho Datepicker Unit Tests', () => {
       placeholder: 'a different placeholder',
       showLegend: false,
       showMonthYearPicker: false,
-      advanceMonths: 5,
-      legend: [{name: 'Mondays', color: '#EFA880', dayOfWeek: [1]}],
-      calendarName:  'islamic-umalqura',
+      legend: [{ name: 'Mondays', color: '#EFA880', dayOfWeek: [1] }],
+      locale: 'ar-SA',
+      calendarName: 'islamic-umalqura',
       disable: {
         dates: '',
         minDate: '12/31/2015',
@@ -290,6 +324,8 @@ describe('Soho Datepicker Unit Tests', () => {
         dayOfWeek: []
       },
       hideDays: true,
+      yearsAhead: 5,
+      yearsBack: 4,
       useUTC: false
     };
 
@@ -315,8 +351,8 @@ describe('Soho Datepicker Unit Tests', () => {
       comp.placeholder = 'a different placeholder';
       comp.showLegend = false;
       comp.showMonthYearPicker = false;
-      comp.advanceMonths = 5;
-      comp.legend = [{name: 'Mondays', color: '#EFA880', dayOfWeek: [1]}];
+      comp.legend = [{ name: 'Mondays', color: '#EFA880', dayOfWeek: [1] }];
+      comp.locale = 'ar-SA';
       comp.calendarName = 'islamic-umalqura';
       comp.disable = {
         dates: '',
@@ -325,6 +361,8 @@ describe('Soho Datepicker Unit Tests', () => {
         dayOfWeek: []
       };
       comp.hideDays = true;
+      comp.yearsAhead = 5;
+      comp.yearsBack = 4;
       comp.useUTC = false;
 
       // fixture.detectChanges();
@@ -337,7 +375,7 @@ describe('Soho Datepicker Unit Tests', () => {
         // fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-          expect(comp.datepicker.options.range).toEqual({useRange: true}, 'Range object nor set to useRange: true');
+          expect(comp.datepicker.options.range).toEqual({ useRange: true }, 'Range object nor set to useRange: true');
 
           comp.range = {};
           comp.mode = 'range';

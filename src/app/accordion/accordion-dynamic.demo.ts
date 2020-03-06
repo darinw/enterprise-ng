@@ -14,7 +14,7 @@ import {
 
 @Component({
   selector: 'accordion-dynamic-demo', // tslint:disable-line
-  templateUrl: './accordion-dynamic.demo.html',
+  templateUrl: 'accordion-dynamic.demo.html',
 })
 export class AccordionDynamicDemoComponent {
 
@@ -33,7 +33,7 @@ export class AccordionDynamicDemoComponent {
 
   public allowOnePane = true;
 
-  @ViewChild(SohoAccordionComponent) accordion: SohoAccordionComponent;
+  @ViewChild(SohoAccordionComponent, { static: true }) accordion: SohoAccordionComponent;
 
   public addMore() {
     this.sampleData.forEach((d) => { d.expanded = false; });

@@ -11,11 +11,11 @@ import {
 
 @Component({
   selector: 'app-colorpicker-demo',
-  templateUrl: './colorpicker.demo.html',
+  templateUrl: 'colorpicker.demo.html',
 })
 export class ColorPickerDemoComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(SohoColorPickerComponent) colorpicker: SohoColorPickerComponent;
+  @ViewChild(SohoColorPickerComponent, { static: true }) colorpicker: SohoColorPickerComponent;
 
   public model = { // tslint:disable-line
     color: '#1a1a1a',
@@ -72,7 +72,7 @@ export class ColorPickerDemoComponent implements OnInit, AfterViewInit {
   changeCustomColors() {
     const newColors = Array<SohoColorOption>();
     newColors.push({label: 'Grape', value: '2578a9', number: '10'} as SohoColorOption);
-    newColors.push({label: 'Blueberry', value: '368ac0', number: '08'});
+    newColors.push({label: 'Blueberry', value: '2578A9', number: '08'});
     newColors.push({label: 'Banana', value: 'efa836', number: '09'});
 
     this.colorpicker.customColors = true;

@@ -13,11 +13,11 @@ import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-fileupload-advanced-demo',
-  templateUrl: './fileupload-advanced.demo.html',
+  templateUrl: 'fileupload-advanced.demo.html',
 })
 export class FileUploadAdvancedDemoComponent implements OnInit {
 
-  @ViewChild(SohoFileUploadAdvancedComponent) fileUploadAdvanced: SohoFileUploadAdvancedComponent;
+  @ViewChild(SohoFileUploadAdvancedComponent, { static: true }) fileUploadAdvanced: SohoFileUploadAdvancedComponent;
 
   public showModel = false;
   public fileUploadDisabled = false;
@@ -39,7 +39,7 @@ export class FileUploadAdvancedDemoComponent implements OnInit {
     this.fileUploadDisabled = this.fileUploadAdvanced.disabled;
   }
 
-  onFilesdragenter(file: File[]) {
+  onFilesdragenter(event: JQuery.TriggeredEvent) {
     console.log('FileUploadAdvancedDemoComponent.onFileDropped');
   }
 

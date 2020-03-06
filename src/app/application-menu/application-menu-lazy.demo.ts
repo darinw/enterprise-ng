@@ -14,14 +14,14 @@ import { ApplicationMenuLazyMenuDemoComponent } from './application-menu-lazy-me
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'application-menu-lazy-demo',
-  templateUrl: './application-menu-lazy.demo.html',
+  templateUrl: 'application-menu-lazy.demo.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ApplicationMenuLazyDemoComponent implements AfterViewInit, OnInit {
 
-  @ViewChild(SohoApplicationMenuComponent) applicationMenu: SohoApplicationMenuComponent;
-  @ViewChild(ApplicationMenuLazyMenuDemoComponent) private _lazyMenuComponent: ApplicationMenuLazyMenuDemoComponent;
-  @ViewChild('webAppMenuHeader') private _webAppMenuHeader: ElementRef;
+  @ViewChild(SohoApplicationMenuComponent, { static: true }) applicationMenu: SohoApplicationMenuComponent;
+  @ViewChild(ApplicationMenuLazyMenuDemoComponent, { static: true }) private _lazyMenuComponent: ApplicationMenuLazyMenuDemoComponent;
+  @ViewChild('webAppMenuHeader', { static: true }) private _webAppMenuHeader: ElementRef;
 
   public triggers: Array<string> = [];
   public menu: Array<any> = [];

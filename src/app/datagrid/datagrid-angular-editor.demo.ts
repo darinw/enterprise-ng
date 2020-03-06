@@ -183,7 +183,7 @@ export const STATUS_LOOKUP_OPTIONS = {
         soho-mask [process]="'number'" [integerLimit]="3" (write)="onMaskWrite($event)"/>`
 })
 export class DemoCellInputEditorComponent implements SohoDataGridCellEditor {
-  @ViewChild(SohoInputComponent) input: SohoInputComponent;
+  @ViewChild(SohoInputComponent, { static: true }) input: SohoInputComponent;
 
   value: string;
   className: string;
@@ -219,7 +219,7 @@ export class DemoCellInputEditorComponent implements SohoDataGridCellEditor {
   template: `<input soho-datepicker dateFormat="MM/dd/yyyy" mode="standard" placeholder="MM/dd/yyyy"/>`
 })
 export class DemoCellDatePickerEditorComponent implements SohoDataGridCellEditor {
-  @ViewChild(SohoDatePickerComponent) datePicker: SohoDatePickerComponent;
+  @ViewChild(SohoDatePickerComponent, { static: true }) datePicker: SohoDatePickerComponent;
 
   constructor( @Inject('args') public args: SohoDataGridPostRenderCellArgs) {
   }
@@ -282,7 +282,7 @@ export const EDITORS_COLUMNS: SohoDataGridColumn[] = [
 
 @Component({
   selector: 'soho-datagrid-angular-editor',
-  templateUrl: './datagrid-angular-editor.demo.html'
+  templateUrl: 'datagrid-angular-editor.demo.html'
 })
 export class DataGridAngularEditorDemoComponent implements OnInit {
   gridOptions: SohoDataGridOptions = undefined;

@@ -7,11 +7,11 @@ import {SohoPieComponent} from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-pie-demo',
-  templateUrl: './donut.demo.html',
+  templateUrl: 'donut.demo.html',
 })
 export class DonutDemoComponent implements OnInit {
 
-  @ViewChild(SohoPieComponent) sohoPieComponent: SohoPieComponent;
+  @ViewChild(SohoPieComponent, { static: true }) sohoPieComponent: SohoPieComponent;
 
   // The following multiple "private selection" definitions are all examples of ways to set the selection on the chart
   private selection: SohoPieSelected  = {fieldName: 'name', fieldValue: 'Component A'};

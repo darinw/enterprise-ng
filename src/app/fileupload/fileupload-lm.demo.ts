@@ -11,7 +11,7 @@ import {
 
 @Component({
   selector: 'app-fileupload-lm-demo',
-  templateUrl: './fileupload-lm.demo.html',
+  templateUrl: 'fileupload-lm.demo.html',
   styles: [`
       .hidden {
         display: none;
@@ -22,8 +22,8 @@ import {
 })
 export class FileUploadLMDemoComponent implements OnInit {
 
-  @ViewChild(SohoFileUploadComponent) fileupload: SohoFileUploadComponent;
-  @ViewChild('trackDirty') trackdirty: SohoTrackDirtyDirective;
+  @ViewChild(SohoFileUploadComponent, { static: true }) fileupload: SohoFileUploadComponent;
+  @ViewChild('trackDirty', { static: true }) trackdirty: SohoTrackDirtyDirective;
 
   public name3 = 'file-name-track-dirty-existing';
   public fileName = 'add-employee.png';

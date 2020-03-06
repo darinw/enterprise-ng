@@ -17,7 +17,7 @@ import {
 
 @Component({
   selector: 'app-datagrid-standard-formatter-demo',
-  templateUrl: './datagrid-standard-formatter.demo.html',
+  templateUrl: 'datagrid-standard-formatter.demo.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataGridStandardFormatterDemoComponent implements OnInit {
@@ -60,6 +60,20 @@ export class DataGridStandardFormatterDemoComponent implements OnInit {
       formatter: Soho.Formatters.TargetedAchievement,   // Soho.Formatters.Text,
       showPercentText: true,
     };
+
+    // Add `sortFunction` and `sortable: true` to column `orderDate`
+    if (PAGING_COLUMNS && Array.isArray(PAGING_COLUMNS)) {
+      PAGING_COLUMNS.forEach((col) => {
+        if (col.id === 'orderDate') {
+          col.sortable = true;
+          col.sortFunction = function (value: any) {
+            const formatDateStr = Soho.Locale.formatDate(value, { pattern: 'M/d/yyyy' });
+            const time = Soho.Locale.parseDate(formatDateStr).getTime();
+            return time;
+          };
+        }
+      });
+    }
 
     const columns = [ ...PAGING_COLUMNS, statusColumn, ratedColumn ];
 

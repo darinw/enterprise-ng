@@ -7,7 +7,7 @@ import {
 
 @Component({
   selector: 'app-about.demo',
-  templateUrl: './about.demo.html'
+  templateUrl: 'about.demo.html'
 })
 export class AboutDemoComponent {
   /** The about dialog reference. */
@@ -23,11 +23,13 @@ export class AboutDemoComponent {
 
   openAbout() {
 
+    const VERSION_ATTR_NAME = 'data-ids-enterprise-ng-version';
+    const version = $('html').attr(VERSION_ATTR_NAME);
     this.about = this.aboutService
       .about()
       .appName('Infor Design')
       .productName('Enterprise Angular Components')
-      .version('ver. 4.9.0')
+      .version(`ver. ${version}`)
       .content('<p>Fashionable components for fashionable applications.</p>')
       .open();
   }

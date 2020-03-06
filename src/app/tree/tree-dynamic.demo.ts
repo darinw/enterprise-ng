@@ -15,7 +15,7 @@ import { SohoTreeComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-tree-dynamic-demo',
-  templateUrl: './tree-dynamic.demo.html',
+  templateUrl: 'tree-dynamic.demo.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TreeDynamicDemoComponent implements AfterViewInit {
@@ -59,7 +59,7 @@ export class TreeDynamicDemoComponent implements AfterViewInit {
     }
   ];
 
-  @ViewChild(SohoTreeComponent)
+  @ViewChild(SohoTreeComponent, { static: true })
   tree: SohoTreeComponent;
 
   private subject = new Subject<SohoTreeNode[]>();
@@ -114,7 +114,6 @@ export class TreeDynamicDemoComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.reset();
+    setTimeout(() => this.reset());
   }
-
 }

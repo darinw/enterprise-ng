@@ -10,11 +10,11 @@ import {
 
 @Component({
   selector: 'app-line-demo',
-  templateUrl: './line.demo.html',
+  templateUrl: 'line.demo.html',
 })
 export class LineDemoComponent implements OnInit {
 
-  @ViewChild(SohoLineComponent) sohoLineComponent: SohoLineComponent;
+  @ViewChild(SohoLineComponent, { static: true }) sohoLineComponent: SohoLineComponent;
 
   // The following multiple "private selection" definitions are all examples of ways to set the selection on the chart
   private selection: SohoLineSelected  = {groupIndex: 2};

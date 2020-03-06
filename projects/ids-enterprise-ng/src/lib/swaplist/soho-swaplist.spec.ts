@@ -79,6 +79,7 @@ export class SwapListTestService extends SohoSwapListService {
 })
 class SohoSwapListTestComponent {
   @ViewChild(SohoSwapListComponent) swaplist: SohoSwapListComponent;
+
   public options = {
     available: [
       { id: 1, value: 'opt-1', text: 'Option A' },
@@ -196,9 +197,9 @@ describe('Soho Swap List Render', () => {
 
     fixture = TestBed.createComponent(SohoSwapListTestComponent);
     component = fixture.componentInstance;
-    com = component.swaplist;
     de = fixture.debugElement;
     fixture.detectChanges();
+    com = component.swaplist;
   });
 
   it('Check HTML content', () => {

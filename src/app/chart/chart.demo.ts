@@ -7,7 +7,7 @@ import { SohoChartComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-chart-demo',
-  templateUrl: './chart.demo.html',
+  templateUrl: 'chart.demo.html',
   providers: [ChartDemoService],
   styles: [`
     .radio-label {
@@ -18,7 +18,7 @@ import { SohoChartComponent } from 'ids-enterprise-ng';
 })
 export class ChartDemoComponent implements OnInit {
 
-  @ViewChild(SohoChartComponent) sohoChartComponent: SohoChartComponent;
+  @ViewChild(SohoChartComponent, { static: true }) sohoChartComponent: SohoChartComponent;
 
   @HostBinding('style.display') get getDisplay() {
     return 'block';

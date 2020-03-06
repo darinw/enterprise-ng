@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-toolbar-flex-basic-demo',
-  templateUrl: './toolbar-flex-basic.demo.html'
+  templateUrl: 'toolbar-flex-basic.demo.html'
 })
 export class ToolbarFlexBasicDemoComponent {
   onSelected(event) {
@@ -13,5 +13,9 @@ export class ToolbarFlexBasicDemoComponent {
       data = event.item.element.dataset.action;
     }
     alert(data);
+  }
+
+  public onSubmit() {
+    console.log('submit');
   }
 }

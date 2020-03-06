@@ -11,11 +11,11 @@ import {
 // @ts-ignore
 @Component({
   selector: 'app-listview-custom-content-demo',
-  templateUrl: './listview.custom-content.demo.html',
+  templateUrl: 'listview.custom-content.demo.html',
 })
 export class ListViewCustomContentDemoComponent implements OnInit {
 
-  @ViewChild(SohoListViewComponent) sohoListViewComponent: SohoListViewComponent;
+  @ViewChild(SohoListViewComponent, { static: true }) sohoListViewComponent: SohoListViewComponent;
   data1 = ['ONE', 'TWO', 'THREE'];
   data2 = ['Four', 'FIVE', 'SIX', 'SEVEN'];
   data = this.data1;

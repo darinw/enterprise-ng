@@ -14,10 +14,10 @@ import { SohoSearchFieldComponent } from 'ids-enterprise-ng';
 
 @Component({
   selector: 'app-searchfield-demo',
-  templateUrl: './searchfield.demo.html'
+  templateUrl: 'searchfield.demo.html'
 })
 export class SearchFieldDemoComponent implements OnInit {
-  @ViewChild(SohoSearchFieldComponent) searchfield: SohoSearchFieldComponent;
+  @ViewChild(SohoSearchFieldComponent, { static: true }) searchfield: SohoSearchFieldComponent;
 
   /**
    * Bindable Model value for getting what was typed in the search box.
